@@ -1,1 +1,1 @@
-# Lab 1 : EDA
+# Mini-Lab: Logistic Regression and SVM's
