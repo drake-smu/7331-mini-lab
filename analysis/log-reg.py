@@ -36,14 +36,14 @@ df_cols = [
     'income_bracket'
 ]
 cat_cols = [
-    "workclass", 
-    "education", 
+    "workclass",
+    "education_num",
     "marital_status", 
     "race", 
     "gender"]
 
 cont_cols = [
-    "age",
+    "age", 
     "capital_gain", 
     "capital_loss",                  
     "hours_per_week"]
@@ -51,8 +51,9 @@ cont_cols = [
 target_col = "target"
 
 drop_cols = [
+    'fnlwgt',
     "native_country", 
-    "education_num", 
+    "education", 
     "occupation",           
     "relationship"]
 
