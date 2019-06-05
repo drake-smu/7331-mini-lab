@@ -75,3 +75,12 @@ for i in secondary:
     print(df_census.groupby([i,'income_bracket'])[i].count().unstack(), end="\n\n")
 
 #%%
+## boxplots of income by gender dist.
+sns.set_style('whitegrid')
+sns.countplot(x='income_bracket',
+    hue='gender',
+    data=df_census,
+    palette='RdBu_r')
+
+
+#%%
