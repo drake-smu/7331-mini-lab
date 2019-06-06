@@ -1,0 +1,139 @@
+
+
+================================================================================
+
+Log Loss:   5.174175
+
+Continuous Columns:
+['age', 'education_num', 'capital_gain', 'capital_loss', 'hours_per_week']
+
+Categorical Columns:
+['workclass', 'education', 'native_country', 'marital_status', 'occupation', 'race', 'gender', 'relationship']
+
+Drop Columns:
+['fnlwgt']
+
+================================================================================
+
+================================================================================
+
+Log Loss:   5.169932
+
+Continuous Columns:
+['age', 'education_num', 'capital_gain', 'capital_loss', 'hours_per_week']
+
+Categorical Columns:
+['workclass', 'education', 'native_country', 'marital_status', 'occupation', 'race', 'gender']
+
+Drop Columns:
+['fnlwgt', 'relationship']
+
+================================================================================
+
+================================================================================
+
+Log Loss:   5.169930
+
+Continuous Columns:
+['age', 'capital_gain', 'capital_loss', 'hours_per_week']
+
+Categorical Columns:
+['workclass', 'education', 'education_num', 'native_country', 'marital_status', 'occupation', 'race', 'gender']
+
+Drop Columns:
+['fnlwgt', 'relationship']
+
+================================================================================
+
+================================================================================
+
+Log Loss:   5.229330
+
+Continuous Columns:
+['age', 'capital_gain', 'hours_per_week']
+
+Categorical Columns:
+['workclass', 'education', 'education_num', 'native_country', 'marital_status', 'occupation', 'race', 'gender']
+
+Drop Columns:
+['fnlwgt', 'capital_loss', 'relationship']
+
+================================================================================
+
+
+
+logLoss = log_loss(y_test,predictions)...
+================================================================================
+
+Log Loss:   5.184780
+
+Continuous Columns:
+['age', 'capital_gain', 'capital_loss', 'hours_per_week']
+
+Categorical Columns:
+['workclass', 'education_num', 'native_country', 'marital_status', 'occupation', 'race', 'gender']
+
+Drop Columns:
+['fnlwgt', 'education', 'relationship']
+
+================================================================================
+
+================================================================================
+
+Log Loss:   5.106289
+
+Continuous Columns:
+['age', 'education_num', 'capital_gain', 'capital_loss', 'hours_per_week']
+
+Categorical Columns:
+['workclass', 'native_country', 'marital_status', 'occupation', 'race', 'gender']
+
+Drop Columns:
+['fnlwgt', 'education', 'relationship']
+
+================================================================================
+
+================================================================================
+
+Log Loss:   5.193266
+
+Continuous Columns:
+['age', 'education_num', 'capital_gain', 'capital_loss', 'hours_per_week']
+
+Categorical Columns:
+['workclass', 'marital_status', 'occupation', 'race', 'gender']
+
+Drop Columns:
+['fnlwgt', 'education', 'native_country', 'relationship']
+
+================================================================================
+
+================================================================================
+
+Log Loss:   5.102047
+
+Continuous Columns:
+['age', 'education_num', 'capital_gain', 'capital_loss', 'hours_per_week']
+
+Categorical Columns:
+['workclass', 'native_country', 'marital_status', 'occupation', 'race', 'gender', 'relationship']
+
+Drop Columns:
+['fnlwgt', 'education']
+
+================================================================================
+
+================================================================================
+
+Log Loss:   5.076590
+
+Continuous Columns:
+['age', 'education_num', 'capital_gain', 'capital_loss', 'hours_per_week']
+
+Categorical Columns:
+['workclass', 'marital_status', 'occupation', 'race', 'gender', 'relationship']
+
+Drop Columns:
+['fnlwgt', 'native_country', 'education']
+
+================================================================================

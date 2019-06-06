@@ -36,26 +36,26 @@ df_cols = [
     'income_bracket'
 ]
 cat_cols = [
-    "native_country",
-    "workclass", 
-    "education", 
+    "workclass",
     "marital_status", 
+    "occupation",
     "race", 
-    "gender"]
+    "gender",
+    "relationship"]
 
 cont_cols = [
-    "age",
-    "capital_gain", 
-    "capital_loss",                  
+    "age", 
+    "education_num",
+    "capital_gain",
+    "capital_loss",
     "hours_per_week"]
-
-target_col = "target"
 
 drop_cols = [
     'fnlwgt',
-    "education_num", 
-    "occupation",           
-    "relationship"]
+    "native_country",
+    "education"]
+
+target_col = "target"
 
 #%%
 df_training = pd.read_csv("data/adult-training.csv",
@@ -147,10 +147,9 @@ y_test = df_test_dum[target_col]
 
 #%%
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score , classification_report
+from sklearn.metrics import accuracy_score , classification_report, log_loss
 
-
-logmodel = LogisticRegression()
+logmodel = LogisticRegression(solver='liblinear',random_state=101)
 logmodel.fit(X_train,y_train)
 
 predictions = logmodel.predict(X_test)
@@ -160,4 +159,15 @@ print(classification_report(y_test,predictions))
 print("Accuracy:",accuracy_score(y_test, predictions))
 
 
+#%%
+
+logLoss = log_loss(y_test,predictions)
+print(
+    "="*80,
+    "Log Loss:   %f" % logLoss,
+    "Continuous Columns:\n%a" % cont_cols,
+    "Categorical Columns:\n%a" %cat_cols,
+    "Drop Columns:\n%a" %drop_cols,
+    sep="\n\n",
+    end="\n\n"+("="*80))
 #%%
