@@ -157,6 +157,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer, make_column_transformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.metrics import accuracy_score , classification_report, log_loss
+from sklearn.svm import LinearSVC, SVC
 
 #%%
 preprocess = make_column_transformer(
@@ -169,18 +170,24 @@ model2 = make_pipeline(
     preprocess,
     LogisticRegression(solver='liblinear'))
 
+svm1 = LinearSVC(C=0.007)
+svm1.fit(X_train, y_train)
 model1.fit(X_train,y_train)
 model2.fit(X_train2,y_train2)
 
 predictions1 = model1.predict(X_test)
 predictions2 = model2.predict(X_test2)
 
+svm_predictions = svm1.predict(X_test)
 #%%
 print(classification_report(y_test,predictions1))
 print("Accuracy:",accuracy_score(y_test, predictions1))
 
 print(classification_report(y_test2,predictions2))
 print("Accuracy:",accuracy_score(y_test2, predictions2))
+
+print(classification_report(y_test,svm_predictions))
+print("Accuracy:",accuracy_score(y_test, svm_predictions))
 
 
 #%%
