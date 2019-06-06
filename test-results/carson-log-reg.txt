@@ -125,7 +125,19 @@ Drop Columns:
 
 ================================================================================
 
-Log Loss:   5.076590
+              precision    recall  f1-score   support
+
+           0       0.88      0.93      0.91     12435
+           1       0.73      0.60      0.66      3846
+
+    accuracy                           0.85     16281
+   macro avg       0.81      0.76      0.78     16281
+weighted avg       0.85      0.85      0.85     16281
+
+
+Accuracy:    0.853019
+
+Log Loss:    5.076590
 
 Continuous Columns:
 ['age', 'education_num', 'capital_gain', 'capital_loss', 'hours_per_week']

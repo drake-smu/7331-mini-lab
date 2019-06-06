@@ -119,8 +119,11 @@ df_test.native_country = df_test.native_country.replace(to_replace=replace_other
 #%%
 
 df_training.drop(drop_cols,axis=1,inplace=True)
-
 df_test.drop(drop_cols,axis=1,inplace=True)
+
+#%%
+df_training2 = df_training.copy()
+df_test2 = df_test.copy()
 
 #%%
 def convert_dummy(df,cols):
@@ -141,30 +144,53 @@ X_train = df_training_dum.drop(columns=["income_bracket",target_col])
 y_train = df_training_dum[target_col]
 X_test = df_test_dum.drop(columns=["income_bracket",target_col])
 y_test = df_test_dum[target_col]
-# X = np.c_[np.ones((X.shape[0], 1)), X]
-# y = y[:, np.newaxis]
-# theta = np.zeros((X.shape[1], 1))
+
+X_train2 = df_training2.drop(columns=["income_bracket",target_col])
+y_train2 = df_training2[target_col]
+X_test2 = df_test2.drop(columns=["income_bracket",target_col])
+y_test2 = df_test2[target_col]
 
 #%%
+from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
+from sklearn.impute import SimpleImputer
+from sklearn.compose import ColumnTransformer, make_column_transformer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.metrics import accuracy_score , classification_report, log_loss
 
-logmodel = LogisticRegression(solver='liblinear',random_state=101)
-logmodel.fit(X_train,y_train)
-
-predictions = logmodel.predict(X_test)
+#%%
+preprocess = make_column_transformer(
+    (cont_cols ,make_pipeline(SimpleImputer(), StandardScaler())),
+    (cat_cols, OneHotEncoder()))
 
 #%%
-print(classification_report(y_test,predictions))
-print("Accuracy:",accuracy_score(y_test, predictions))
+model1 = LogisticRegression(solver='liblinear')
+model2 = make_pipeline(
+    preprocess,
+    LogisticRegression(solver='liblinear'))
+
+model1.fit(X_train,y_train)
+model2.fit(X_train2,y_train2)
+
+predictions1 = model1.predict(X_test)
+predictions2 = model2.predict(X_test2)
+
+#%%
+print(classification_report(y_test,predictions1))
+print("Accuracy:",accuracy_score(y_test, predictions1))
+
+print(classification_report(y_test2,predictions2))
+print("Accuracy:",accuracy_score(y_test2, predictions2))
 
 
 #%%
 
-logLoss = log_loss(y_test,predictions)
+logLoss = log_loss(y_test,predictions1)
 print(
     "="*80,
-    "Log Loss:   %f" % logLoss,
+    classification_report(y_test,predictions1),
+    "Accuracy:    %f" %accuracy_score(y_test, predictions1),
+    "Log Loss:    %f" % logLoss,
     "Continuous Columns:\n%a" % cont_cols,
     "Categorical Columns:\n%a" %cat_cols,
     "Drop Columns:\n%a" %drop_cols,
