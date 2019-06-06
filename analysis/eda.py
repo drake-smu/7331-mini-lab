@@ -81,6 +81,32 @@ sns.countplot(x='income_bracket',
     hue='gender',
     data=df_census,
     palette='RdBu_r')
+#%%
+## by marital status
+sns.set_style('whitegrid')
+sns.countplot(x='income_bracket',
+    hue='marital_status',
+    data=df_census,
+    palette='RdBu_r')
 
 
 #%%
+#Generate Correlation HeatMap
+colormap = sns.diverging_palette(220, 10, as_cmap=True)
+f, ax = plt.subplots(figsize=(10, 10))
+corr = df_census.corr()
+
+sns.heatmap(corr, cmap="coolwarm", annot=True, fmt=".1f",
+            xticklabels=corr.columns.values,
+            yticklabels=corr.columns.values)
+
+#%%
+# Pairplot matrix.  
+#%%
+g = sns.PairGrid(df_census,vars=['age','fnlwgt',
+                               'capital_gain','capital_loss', 
+                               'hours_per_week'],
+                               hue='income_bracket',palette = 'muted')
+g.map(plt.scatter, alpha=0.8)
+g.add_legend();
+
