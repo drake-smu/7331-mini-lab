@@ -60,7 +60,13 @@ print("Summary Statistic's:\n",round(df_census.describe().unstack(),2),"\n")
 education_categories = list(df_census.education.unique())
 
 print(df_census.groupby(['education','gender'])['gender'].count().unstack())
-    
+
+#%% Data Cleaning
+# Change income bracket values that have a . at end and remove space 
+df_census = df_census.replace(to_replace=(' >50K.', ' >50K'),value='>50K')
+df_census = df_census.replace(to_replace=(' <=50K.', ' <=50K'),value='<=50K')    
+
+
 #%%
 secondary = [
     'education',
@@ -110,3 +116,4 @@ g = sns.PairGrid(df_census,vars=['age','fnlwgt',
 g.map(plt.scatter, alpha=0.8)
 g.add_legend();
 
+#%%
