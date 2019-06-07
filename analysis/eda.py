@@ -61,11 +61,17 @@ education_categories = list(df_census.education.unique())
 
 print(df_census.groupby(['education','gender'])['gender'].count().unstack())
 
-#%% Data Cleaning
+#%% Data Cleaning (Mostlyche's)
 # Change income bracket values that have a . at end and remove space 
 df_census = df_census.replace(to_replace=(' >50K.', ' >50K'),value='>50K')
 df_census = df_census.replace(to_replace=(' <=50K.', ' <=50K'),value='<=50K')    
-
+df_census = df_census.replace(to_replace=(' United-States', ' Honduras', ' Mexico',' Puerto-Rico',' Canada', ' Outlying-US(Guam-USVI-etc)', ' Nicaragua', ' Guatemala', ' El-Salvador' ),value='North America')
+df_census = df_census.replace(to_replace=(' Cuba', ' Jamaica', ' Trinadad&Tobago', ' Haiti', ' Dominican-Republic' ),value='Caribbean')
+df_census = df_census.replace(to_replace=(' South', ' Cambodia',' Thailand',' Laos', ' Taiwan', ' China', ' Japan', ' India', ' Iran', ' Philippines', ' Vietnam', ' Hong'),value='Asia')
+df_census = df_census.replace(to_replace=(' England', ' Germany', ' Portugal', ' Italy', ' Poland', ' France', ' Yugoslavia',' Scotland', ' Greece', ' Ireland', ' Hungary', ' Holand-Netherlands'),value='Europe') 
+df_census = df_census.replace(to_replace=(' Columbia', ' Ecuador', ' Peru'),value='South America')
+df_census = df_census.replace(to_replace=(' ?'),value='Other')   
+ 
 
 #%%
 secondary = [
