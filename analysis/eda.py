@@ -123,3 +123,24 @@ g.map(plt.scatter, alpha=0.8)
 g.add_legend();
 
 #%%
+df_age = df_census.loc[:,['gender', 'age', 'income_bracket']]
+conditions = [
+    (df_age['age'] < 20),
+    (df_age['age'] < 30),
+    (df_age['age'] < 40),
+    (df_age['age'] < 50),
+    (df_age['age'] < 60),
+    (df_age['age'] < 70),
+    (df_age['age'] < 110)]
+choices = ['10-20', '20-30', '30-40','40-50','50-60','60-70','70-110']
+df_age['age_group'] = np.select(conditions, choices, default='70-110')
+
+sns.set_style('whitegrid')
+sns.countplot(x='age_group',
+    hue='income_bracket',
+    data=df_age,
+    palette='RdBu_r',
+    order=choices)
+
+
+#%%
