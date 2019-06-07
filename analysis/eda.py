@@ -153,4 +153,12 @@ g = sns.pairplot(df_census,kind="scatter",vars=['age','fnlwgt',
 g.add_legend();
 
 
+#%% Crazy violin plot
+# Plot
+sns.catplot(x="age", y="native_country",
+            hue="gender", col="income_bracket",
+            data=df_census,
+            orient="h", height=5, aspect=1, palette="tab10",
+            kind="violin", dodge=True, cut=0, bw=.2)
+
 #%%
