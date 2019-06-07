@@ -143,4 +143,14 @@ sns.countplot(x='age_group',
     order=choices)
 
 
+#%% Another style of the pairplot above with a few more details
+g = sns.pairplot(df_census,kind="scatter",vars=['age','fnlwgt',
+                               'capital_gain','capital_loss', 
+                               'hours_per_week'],
+                               hue='income_bracket',
+                               plot_kws=dict(s=80, edgecolor="white", linewidth=2.5),
+                               palette = 'muted')
+g.add_legend();
+
+
 #%%
