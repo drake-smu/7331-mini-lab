@@ -92,7 +92,7 @@ data.head(2)
 
 #%%
 from sklearn.model_selection import train_test_split
-setsdata_train, data_test, target_train, target_test = train_test_split(data,target, test_size = 0.20, random_state = 10)
+data_train, data_test, target_train, target_test = train_test_split(data,target, test_size = 0.20, random_state = 10)
 #%%
 
 from sklearn.svm import LinearSVC
