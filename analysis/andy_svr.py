@@ -83,10 +83,10 @@ df_master['native_country'] = le.fit_transform(df_master['native_country'])
 df_master.head()
 
 #split up the target 'income' out from df_master
-cols = [col for col in df_master.columns if col not in ['income_bracket']]
+cols = [col for col in df_master.columns if col not in ['income']]
 data = df_master[cols]
 target = df_master['income']
-data.head(2)
+data.head(3)
 
 
 

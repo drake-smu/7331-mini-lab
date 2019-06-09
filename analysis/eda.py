@@ -162,3 +162,22 @@ sns.catplot(x="age", y="native_country",
             kind="violin", dodge=True, cut=0, bw=.2)
 
 #%%
+df_census['age_group'] = np.select(conditions, choices, default='70-110')
+
+#%%
+## Box Plot of region by income bracket.
+plt.figure(figsize=(10,8), dpi= 80)
+sns.boxplot(x='age_group', y='hours_per_week', 
+            data=df_census, hue='income_bracket',
+            order=choices, palette="tab10")
+# sns.stripplot(x='age_group', y='hours_per_week', data=df_census, color='black', size=3, jitter=1)
+
+# for i in range(len(df_census['age_group'].unique())-1):
+#     plt.vlines(i+.5, 10, 45, linestyles='solid', colors='gray', alpha=0.2)
+
+# Decoration
+plt.title('Age Group Hours per week by income_bracket', fontsize=22)
+plt.legend(title='Income_Bracket')
+plt.show()
+
+#%%
