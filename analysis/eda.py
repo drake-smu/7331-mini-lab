@@ -16,10 +16,36 @@ except:
 ## Table of Contents
 # We'll have to put one in tomorrow, i'm just going to start writing 
 
-#%% [markdown]
+#%% [markdown] 
+# supposed to be a table on contents, but i dont know how to make
+# markdown do that yet. 
 # ## Section 1:Business Understanding
-    # ### Section 1a: Describe the purpose of the data set you selected
+#     ### Section 1a: Describe the purpose of the data set you selected
+
+#%% [markdown] 
+# # Business Understanding
+# ## Section 1a: Describe the purpose of the data set you selected.  
+# We chose this dataset from the UCI's machine learning repository for its
+# predictive attributes.  It contains 1994 Census data pulled from the US Census
+# database.  The prediction task we've set forth is to predict if a persons
+# salary range is >50k in a year, based on the various categorical/numerical
+# attributes in the census database. The link to the data source is below:
 #
+# https://archive.ics.uci.edu/ml/datasets/census+income
+#
+# ## Section 1b: Describe how you would define and measure the outcomes from the dataset. 
+# (That is, why is this data important and how do you know if you have mined
+# useful knowledge from the dataset? How would you measure the effectiveness of
+# a good prediction algorithm? Be specific.)
+# 
+# We 
+
+
+
+
+
+
+
 
 #%%
 #Add library references
