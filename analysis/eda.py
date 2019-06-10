@@ -61,7 +61,7 @@ except:
 # * education - What level of education received?
 # * marital_status - What is their marriage history
 # * occupation - What do they do for a living
-# * relationship - 
+# * relationship - Family member relation
 # * race - What is the subjects race
 # * gender - What is the subjects gender
 # * native_country - Where is the subject originally from
@@ -75,8 +75,13 @@ except:
 # * capital_loss - losses from investment sources, seperate from wages/salary
 # * hours_per_week - How many hours a week did they work? 
 #
+#
+# ### Section 2b: Data Quality
+# Verify data quality: Explain any missing values, duplicate data, and outliers.
+# Are those mistakes? How do we deal with these problems?
+#
 # In the next code section we will import our libraries and data, then begin looking at
-# simple statistics.
+# missing data, duplicate data, and outliers. 
 
 #%%
 # Add library references
@@ -110,9 +115,14 @@ df_headers = [
 df_census = pd.read_csv("data/adult-training.csv",
     names=df_headers, 
     index_col=False)
+# Input in case we want to combine the dataframes. 
+# df_test = pd.read_csv("data/adult-test.csv",names = df_headers,skiprows=1)
+# df_census = pd.concat([df_test, df_census], axis=0)
 
 df_census.head(10)
 
+#%% [markdown]
+# 
 #%%
 print("Structure of data:\n",df_census.shape,"\n")
 print("Count of missing values:\n",df_census.isnull().sum().sort_values(ascending=False),"\n")
@@ -142,8 +152,10 @@ df_census = df_census.replace(to_replace=(' Cuba', ' Jamaica', ' Trinadad&Tobago
 df_census = df_census.replace(to_replace=(' South', ' Cambodia',' Thailand',' Laos', ' Taiwan', ' China', ' Japan', ' India', ' Iran', ' Philippines', ' Vietnam', ' Hong'),value='Asia')
 df_census = df_census.replace(to_replace=(' England', ' Germany', ' Portugal', ' Italy', ' Poland', ' France', ' Yugoslavia',' Scotland', ' Greece', ' Ireland', ' Hungary', ' Holand-Netherlands'),value='Europe') 
 df_census = df_census.replace(to_replace=(' Columbia', ' Ecuador', ' Peru'),value='South America')
-df_census = df_census.replace(to_replace=(' ?'),value='Other')   
- 
+df_census = df_census.replace(to_replace=(' ?'),value='Other') 
+
+# encoding into 1 and zero variables for income_bracket. 
+df_census['income_bracket'] = df_census['income_bracket'].apply(lambda x: 1 if x=='>50K' else 0)
 
 #%%
 secondary = [
