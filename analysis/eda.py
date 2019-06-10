@@ -6,6 +6,21 @@ try:
 	print(os.getcwd())
 except:
 	pass
+
+#%% [markdown]
+# # Data Mining 7331 - Summer 2019
+# ## MiniLab 1 - Logistic Regression and Support Vector Machines
+
+# ### Carson Drake, Che Cobb, David Josephs, Andy Heroy
+
+## Table of Contents
+# We'll have to put one in tomorrow, i'm just going to start writing 
+
+#%% [markdown]
+# ## Section 1:Business Understanding
+    # ### Section 1a: Describe the purpose of the data set you selected
+#
+
 #%%
 #Add library references
 import pandas as pd
