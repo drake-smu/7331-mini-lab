@@ -28,7 +28,7 @@ except:
 # We chose this dataset from the UCI's machine learning repository for its
 # predictive attributes.  It contains 1994 Census data pulled from the US Census
 # database.  The prediction task we've set forth is to predict if a persons
-# salary range is >50k in a year, based on the various categorical/numerical
+# salary range is >50k in a 1994, based on the various categorical/numerical
 # attributes in the census database. The link to the data source is below:
 #
 # https://archive.ics.uci.edu/ml/datasets/census+income
@@ -37,9 +37,18 @@ except:
 # (That is, why is this data important and how do you know if you have mined
 # useful knowledge from the dataset? How would you measure the effectiveness of
 # a good prediction algorithm? Be specific.)
-# 
-# We 
-
+#
+# The main benefit of this data is to be able to predict a persons salary range
+# based on factors collected around each worker in 1994.  With that insight, we
+# can look at a persons, age, education, marital status, occupation and begin to
+# explore the relationships that most influence income.  We'd like to find:
+#   * What factors are the strongest influence of a how much many they will
+#     make. 
+#   * What age groups show the largest amount of incomes over >50k?  aka, what
+#     years of our life should we be working hardest in order to make the most
+#     money. 
+#   * Does where you come from influence your income? (native country)
+#   *
 
 
 
