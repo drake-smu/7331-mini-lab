@@ -53,12 +53,12 @@ except:
 # ## Section 2: Data Understanding
 # ### Section 2a: Describe the meaning and type of data for each attribute
 # Here we will dicuss each attribute and give some description about its ranges. 
-
-
-# Category - Description - Range
-# #### Cagtegorical Attributes 
-# * workclass - Which sector do they work in?
-# * education - What level of education recieved?
+#
+#
+# Category - Description
+# #### Categorical Attributes 
+# * workclass - Which business sector do they work in?
+# * education - What level of education received?
 # * marital_status - What is their marriage history
 # * occupation - What do they do for a living
 # * relationship - 
@@ -68,15 +68,18 @@ except:
 # * income_bracket - Do they make over or under 50k/year
 
 # #### Continuous Attributes
-# * age - How old is the subject - 
-# * fnlwgt - Weighting of the observation
+# * age - How old is the subject?
+# * fnlwgt - Sampling weight of observation  
 # * education_num - numerical encoding of education variable
-# * capital_gain - 
-# * capital_loss - 
+# * capital_gain - income from investment sources, seperate from wages/salary
+# * capital_loss - losses from investment sources, seperate from wages/salary
 # * hours_per_week - How many hours a week did they work? 
-# 
+#
+# In the next code section we will import our libraries and data, then begin looking at
+# simple statistics.
+
 #%%
-#Add library references
+# Add library references
 import pandas as pd
 import numpy as np
 import seaborn as sns
