@@ -640,6 +640,16 @@ def print_performance(df_t,df_p, verbose=1):
 # simple dummy variables to encode the categorical features
 # in the data set for each of their k-1 levels.
 
+# Now lets  explain some of the precision outputs from our initial run. 
+# * precision - this is the ratio of the number of true positives and false positives.
+# * recall - this is the ratio of the number of true positives and false negatives
+# * f1-score - the harmonic mean of the precision and recall.
+# * support - occurances in each class
+# * accuracy - count of predictions where the predicted value equals the actual value
+# * Log Loss - the negative log-likelihood of correct classification given the classifier prediction.
+#
+# 
+# These are the metrics we'll be tracking as we improve our model.
 # %%
 model1 = LogisticRegression(solver='liblinear')
 model1.fit(X_train,y_train)
@@ -649,20 +659,8 @@ predictions1 = model1.predict(X_test)
 # print("Coefs: ", model1.coef_)
 # print("Intercept: ", model1.intercept_)
 print_performance(y_test,predictions1,0)
-# %% [markdown]
 
-# Now lets take the time to explain some of the precision outputs from our initial run. 
-# * precision - this is the ratio of the number of true positives and false positives.
-# * recall - this is the ratio of the number of true positives and false negatives
-# * f1-score - the harmonic mean of the precision and recall.
-# * support - occurances in each class
-# * accuracy - count of predictions where the predicted value equals the actual value
-# * Log Loss - the negative log-likelihood of correct classification given the classifier prediction.
-#
-# 
-# These are the metrics we'll be tracking as we improve our model and will
-# provide a summary towards the end. 
-#
+# %% [markdown]
 #
 # ### Logistic Regression (encoding and scaling)
 # The next step towards improving our logistic regression 
@@ -694,8 +692,10 @@ predictions2 = model2.predict(X_test2)
 # print("Intercept: ", model2[1].intercept_)
 print_performance(y_test2,predictions2,0)
 
-# %% [markdown]
-
+# %% [markdown] 
+# 
+# We see similar metrics to the previous LR run, with very little
+# movement and a slight (.001) drop in accuracy.  
 
 # %% [markdown]
 # # Support Vector Machine (SVM)
