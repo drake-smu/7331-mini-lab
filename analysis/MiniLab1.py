@@ -715,11 +715,18 @@ svm1_predictions = svm1.predict(X_test)
 
 print_performance(y_test,svm1_predictions,0)
 # %% [markdown]
+#
+# In comparison the LR model, simple SVM shows a few things.  We see a 0.02 drop
+# in accuracy, as well as an 0.7 increase in log loss. (Bad in both cases)
+# Suggesting that the simple SVM doesn't perform as well as the LR model.  So we
+# will continue with feature scaling on SVM to try and improve upon that. 
+#
+#
 # ## SVM (with feature scaling)
-# Similar to other classification methods, SVM's can be impacted 
-# by varying units and magnitudes of standard deviation across 
-# features. To increase model accuracy the features are transformed 
-# similarly to how they were in the above Logistic Regression model.
+# Similar to other classification methods, SVM's can be impacted by varying
+# units and magnitudes of standard deviation across features. To increase model
+# accuracy the features are transformed similarly to how they were in the above
+# Logistic Regression model.
 # %%
 svm2 = make_pipeline(
         preprocess,
@@ -730,13 +737,18 @@ svm2_predictions = svm2.predict(X_test2)
 print_performance(y_test2,svm2_predictions,0)
 
 # %% [markdown]
+#
+# Here we see an improvement that puts us back in the same performance range as
+# the LR scaled model, with an even lower log loss! (.06)  Which is definitely a
+# step in the right direction.  Precision, recall, and f1-score are all about
+# the same as our LR scaled model. 
+#
 # ## SVM (optimizing C parameter)
-# Outside of data standardization, accuracy can also be increased 
-# through model tuning. In this case, the C parameter, or Penalty 
-# parameter C of the error term, can be tuned to help with over and 
-# under fitting of the model. To tune the model a plot of prediction 
-# scores vs C values will illustrate the optimal C value for the 
-# given model.
+# Outside of data standardization, accuracy can also be increased through model
+# tuning. In this case, the C parameter, or Penalty parameter C of the error
+# term, can be tuned to help with over and under fitting of the model. To tune
+# the model a plot of prediction scores vs C values will illustrate the optimal
+# C value for the given model.
 # %%
 C_s = np.logspace(-10, 0, 10)
 
@@ -782,7 +794,12 @@ svm_max.fit(X_train2, y_train2)
 svm_max_predictions = svm_max.predict(X_test2)
 
 print_performance(y_test2,svm_max_predictions,0)
+# %% [markdown] Luckily we saved our best model for last.  Optimizing the
+# c-parameter slightly reduced our log loss, but again, most of the other
+# categories didn't move much either way. 
+#
 
+# %% [markdown] 
 
 # TODO - From the looks of the visuals on the assignment, I think we may need 
 # a probability plane. So far the best solution for this appears to be by performing
