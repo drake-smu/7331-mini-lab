@@ -516,6 +516,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer, make_column_transformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.model_selection import cross_val_score
 from sklearn.metrics import accuracy_score , classification_report, log_loss
 from sklearn.svm import LinearSVC, SVC
 
@@ -530,9 +531,9 @@ model2 = make_pipeline(
     preprocess,
     LogisticRegression(solver='liblinear'))
 
-svm1 = LinearSVC(C=0.007)
+svm1 = LinearSVC(C=0.07742637)
 svm1.fit(X_train, y_train)
-model1.fit(X_train,y_train)
+model1.fit(X_train,y_train).sco
 model2.fit(X_train2,y_train2)
 
 predictions1 = model1.predict(X_test)
@@ -563,4 +564,38 @@ print(
     "Drop Columns:\n%a" %drop_cols,
     sep="\n\n",
     end="\n\n"+("="*80))
+#%%
+C_s = np.logspace(-10, 0, 10)
+svm2 = LinearSVC(max_iter=5000)
+
+scores = list()
+scores_std = list()
+for C in C_s:
+    this_model = make_pipeline(
+        preprocess,
+        LinearSVC(max_iter=5000, C=C))
+    this_fit = this_model.fit(X_train2, y_train2)
+    # this_pred = 
+    this_scores = this_fit.score(X_test2,y_test2)
+    scores.append(this_scores)
+    scores_std.append(np.std(this_scores))
+
+# Do the plotting
+#%%
+max_index = np.argmax(scores)
+max_C = C_s[max_index].round(8)
+
+plt.figure()
+plt.semilogx(C_s, scores)
+# plt.vlines(max_C, ymax=np.max(scores), ymin=)
+plt.text(max_index,max_C,"Optimal C Value")
+locs, labels = plt.yticks()
+plt.yticks(locs, list(map(lambda x: "%g" % x, locs)))
+plt.ylabel('Mean Prediction Accuracy')
+plt.xlabel('Parameter C')
+# plt.ylim(0.7, 0.9)
+plt.show()
+
+#%%
+
 #%%
