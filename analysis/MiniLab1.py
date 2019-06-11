@@ -702,10 +702,9 @@ t2 = stop2-start2
 # print(classification_report(y_test2,predictions2))
 # print("Accuracy:",accuracy_score(y_test2, predictions2))
 
-
 # print("Coefs: ", model2.steps[1][1].coef_)
 # print("Intercept: ", model2.steps[1][1].intercept_)
-# print("Features are: ", preprocess)
+# print("Features are: ", model2.steps[1][1].classes_)
 # print_performance(y_test2,predictions2,0)
 print("\n runtime: ", t2)
 
@@ -823,9 +822,6 @@ print("\n runtime: ", t5)
 # PCA to reduce X to only 2-d features and then the probability is the 3rd dimention 
 # Possibly might work to just use the two features with largest `.coef_` values?
 
-# %% [markdown]
-# TODO- PUT ME IN RIGHT SPOT
-
 # %% [markdown] 
 # ### Section 3b: Model Advantages
 #
@@ -883,19 +879,34 @@ rest5=print("\n runtime of fifth model: ", t5)
 # ### Section 3c: Interpret Feature Importance
 #
 # #### Use the weights from logistic regression to interpret the importance of different features for the classification task. Explain your interpretation in detail. Why do you think some variables are more important?
-# 
+#
 # Below are the weights and names for the coefficients of our scaled LR model.
+# We will analyze the coefficients for it. 
 # %% 
 print("Feature names: ", ['workclass', 'marital_status', 'occupation', 'race', 'gender', 'relationship'])
 print("Coefs: ", model2.steps[1][1].coef_)
 print("Intercept: ", model2.steps[1][1].intercept_)
 
-#
-# %% [markdown] 
 
+# %% [markdown] 
+#
+# The features above are the first 6 of the coefficients within array returned from the model.  
+#
+# | workclass  | marital_status | occupation | race       | gender      | relationship |
+# |------------|----------------|------------|------------|-------------|--------------|
+# | 0.35556391 | 0.72176436     | 2.30551077 | 0.25910035 | 0.36871751  | -0.20975679] |
+# 
+#
+# From the above weights, we can see which of the main attributes holds what
+# weight for our second model.  As we found in our EDA exploration it would
+# appear that marital status and occupation are two of the heaviest weights.
+# Which makes sense with what we've seen so far from our analysis.   
 
 # %% [markdown] 
 # ### Section 3d: Interpret Support Vectors
 #
 # #### Look at the chosen support vectors for the classification task. Do these provide any insight into the data? Explain. If you used stochastic gradient descent (and therefore did not explicitly solve for support vectors), try subsampling your data to train the SVC model— then analyze the support vectors from the subsampled dataset.
 
+
+
+#%%
