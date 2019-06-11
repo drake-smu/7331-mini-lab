@@ -334,19 +334,23 @@ plt.show()
 # educational level, your hours per week will too increase.  Doctorates and
 # Prof-school being the highest.  The interesting thing to note here is the
 # "Prof-School" category.  Which is defined as a trade school.  Therefore, Those
-# with the highest working hours are thoes of higher or specialized education.
+# with the highest working hours are those of higher or specialized education.
 # Now lets move onto the pairplot and start to get a feel for how our categorial
 # data is distrubuted.  
 #%%
 # Pairplot matrix.  
 #%%
-g = sns.PairGrid(df_census,vars=['age','fnlwgt',
+g = sns.pairplot(df_census,kind="scatter",vars=['age','fnlwgt',
                                'capital_gain','capital_loss', 
                                'hours_per_week'],
-                               hue='income_bracket',palette = 'muted')
+                               hue='income_bracket',
+                               plot_kws=dict(s=80, edgecolor="white", linewidth=2.5),
+                               palette = 'RdBu_r')
 g.map(plt.scatter, alpha=0.8)
 g.add_legend();
-
+#%% [markdown]
+#
+# Our pairplot shows us a few things.  It confirms some of our earlier statements behind ranges and why certain attributes have
 #%%
 df_age = df_census.loc[:,['gender', 'age', 'income_bracket']]
 conditions = [
@@ -366,17 +370,6 @@ sns.countplot(x='age_group',
     data=df_age,
     palette='RdBu_r',
     order=choices)
-
-
-#%% Another style of the pairplot above with a few more details
-g = sns.pairplot(df_census,kind="scatter",vars=['age','fnlwgt',
-                               'capital_gain','capital_loss', 
-                               'hours_per_week'],
-                               hue='income_bracket',
-                               plot_kws=dict(s=80, edgecolor="white", linewidth=2.5),
-                               palette = 'muted')
-g.add_legend();
-
 
 #%% Crazy violin plot
 # Plot
