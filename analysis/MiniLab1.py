@@ -163,7 +163,10 @@ df_census = df_census.replace(to_replace=(' ?'),value='Other')
 df_census['income_bracket'] = df_census['income_bracket'].apply(lambda x: 1 if x=='>50K' else 0)
 
 #%% [markdown]
-# ### Section 2c: Describe the meaning and type of data for each attribute
+# ### Section 2c: simple Statistics
+# Now that our data has been cleansed of any thing we've found thus far.  Its
+# time to look at the statistics behind our continuous data in order to see if
+# there are any other erroneous values within our dataset.  
 
 #%%
 education_categories = list(df_census.education.unique())
