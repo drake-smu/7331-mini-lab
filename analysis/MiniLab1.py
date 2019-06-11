@@ -390,9 +390,27 @@ sns.countplot(x='age_group',
 # that mark by 40, then chances are its gonna get a bit harder to do so from
 # then on.  
 #
+
+#%%
+# Assigning age group to the dataframe. 
+df_census['age_group'] = np.select(conditions, choices, default='70-110')
+# Box Plot of age group by income bracket.
+
+plt.figure(figsize=(10,8), dpi= 80)
+sns.boxplot(x='age_group', y='hours_per_week', 
+            data=df_census, hue='income_bracket',
+            order=choices,palette="tab10")
+
+# Decoration
+plt.title('Age Group Hours per week by income_bracket', fontsize=22)
+plt.legend(title='Income_Bracket')
+plt.show()
+#%% [markdown]
 # Next, we implemented a voilin plot to determine what native countries people
-# immigrated from and how their income distribution fared in the US.  
-# 
+# immigrated from and how their income distribution fared in the US.  Remember
+# previously we assigned each native country to their native continent so really
+# this will be an examination of immigration by age, gender and continent.  
+#
 #%% Crazy violin plot Plot
 sns.catplot(x="age", y="native_country",
             hue="gender", col="income_bracket",
@@ -400,27 +418,10 @@ sns.catplot(x="age", y="native_country",
             orient="h", height=5, aspect=1, palette="tab10",
             kind="violin", dodge=True, cut=0, bw=.2)
 
-#%%
-# Assigning age group to the dataframe. 
-df_census['age_group'] = np.select(conditions, choices, default='70-110')
-
-#%%
-## Box Plot of region by income bracket.
-plt.figure(figsize=(10,8), dpi= 80)
-sns.boxplot(x='age_group', y='hours_per_week', 
-            data=df_census, hue='income_bracket',
-            order=choices,palette="tab10")
-# sns.stripplot(x='age_group', y='hours_per_week', data=df_census, color='black', size=3, jitter=1)
-
-# for i in range(len(df_census['age_group'].unique())-1):
-#     plt.vlines(i+.5, 10, 45, linestyles='solid', colors='gray', alpha=0.2)
-
-# Decoration
-plt.title('Age Group Hours per week by income_bracket', fontsize=22)
-plt.legend(title='Income_Bracket')
-plt.show()
-
-#%%
+#%% [markdown] 
+#
+# While there's alot going on in this chart,  a few things stand out to us.  One
+# is the amount of age 30 to 50 European women who work in the US.
 
 #%%
 df_cols = [
