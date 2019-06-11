@@ -589,7 +589,7 @@ model2 = make_pipeline(
 
 svm1 = LinearSVC(C=0.07742637)
 svm1.fit(X_train, y_train)
-model1.fit(X_train,y_train).sco
+model1.fit(X_train,y_train)
 model2.fit(X_train2,y_train2)
 
 predictions1 = model1.predict(X_test)
@@ -640,15 +640,19 @@ for C in C_s:
 #%%
 max_index = np.argmax(scores)
 max_C = C_s[max_index].round(8)
-
+max_score = np.max(scores)
 plt.figure()
 plt.semilogx(C_s, scores)
 # plt.vlines(max_C, ymax=np.max(scores), ymin=)
-plt.text(max_index,max_C,"Optimal C Value")
 locs, labels = plt.yticks()
 plt.yticks(locs, list(map(lambda x: "%g" % x, locs)))
 plt.ylabel('Mean Prediction Accuracy')
 plt.xlabel('Parameter C')
+plt.annotate('Optimal C Value', xy=(max_C, max_score),  xycoords='data',
+            xytext=(-80, -40), textcoords='offset points',
+            arrowprops=dict(arrowstyle="fancy",
+                            fc="0.6", ec="none",
+                            connectionstyle="angle3,angleA=0,angleB=-90"))
 # plt.ylim(0.7, 0.9)
 plt.show()
 
