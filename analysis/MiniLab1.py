@@ -302,9 +302,27 @@ sns.heatmap(corr, cmap="coolwarm", annot=True, fmt=".2f",
 # correlation within our dataset.  No two attributes scored above 0.2
 # correlation.  The only ones that look to be slightly related are that of
 # education_num and hours_per_week (0.15).  Which leads to some interesting
-# possiblities if the amount of education you recieved determined the hours you
-# worked.  We speculate that the more education recieved, the longer the hours
-# you might work. 
+# possiblities if the amount of education you received determined the hours you
+# worked.  We speculate that the more education received, the longer the hours
+# you might work.  To check that, lets make a quick plot.  
+#%%
+
+df = df_census[['hours_per_week', 'education']].groupby('education').apply(lambda x: x.mean())
+df.sort_values('hours_per_week', inplace=True)
+df.reset_index(inplace=True)
+
+# Draw plot
+fig, ax = plt.subplots(figsize=(10,10), dpi= 80)
+ax.hlines(y=df.index, xmin=30, xmax=50, color='gray', alpha=0.7, linewidth=1, linestyles='dashdot')
+ax.scatter(y=df.index, x=df.hours_per_week, s=75, color='firebrick', alpha=0.7)
+
+# Title, Label, Ticks and Ylim
+ax.set_title('Dot Plot for hours per week', fontdict={'size':22})
+ax.set_xlabel('hours per week')
+ax.set_yticks(df.index)
+ax.set_yticklabels(df.education.str.title(), fontdict={'horizontalalignment': 'right'})
+ax.set_xlim(30, 50)
+plt.show()
 
 #%%
 # Pairplot matrix.  
