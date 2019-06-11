@@ -651,8 +651,19 @@ predictions1 = model1.predict(X_test)
 print_performance(y_test,predictions1,0)
 # %% [markdown]
 
-# Now lets take the time to explain some of the accuracy for each class. 
-
+# Now lets take the time to explain some of the precision outputs from our initial run. 
+# * precision - this is the ratio of the number of true positives and false positives.
+# * recall - this is the ratio of the number of true positives and false negatives
+# * f1-score - the harmonic mean of the precision and recall.
+# * support - occurances in each class
+# * accuracy - count of predictions where the predicted value equals the actual value
+# * Log Loss - the negative log-likelihood of correct classification given the classifier prediction.
+#
+# 
+# These are the metrics we'll be tracking as we improve our model and will
+# provide a summary towards the end. 
+#
+#
 # ### Logistic Regression (encoding and scaling)
 # The next step towards improving our logistic regression 
 # model is to rescale the continuous features in the dataset.
