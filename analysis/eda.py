@@ -139,8 +139,14 @@ print("Count of ? values in workclass: " ,df_census.loc[df_census.workclass == '
 print("Count of ? values in occupation: ", df_census.loc[df_census.occupation == ' ?', 'occupation'].count())
 print("Count of ? values in native_country: ", df_census.loc[df_census.native_country == ' ?', 'native_country'].count())
 
+#%% [markdown] 
+# While our missing values count is very low, we now must change
+# all the ? entries to other in order not cause further errors.  We'll also be
+# grouping each individual native country into their respective continent.  We
+# feel that grouping as such will give us more insight into how U.S. immigrants
+# fare in the job market.  We'll also introduce a pair plot to look in the visualization section.  
 
-#%% Data Cleaning (Mostly che's)
+#%% Data Cleaning 
 # Change income bracket values that have a . at end and remove space 
 df_census = df_census.replace(to_replace=(' >50K.', ' >50K'),value='>50K')
 df_census = df_census.replace(to_replace=(' <=50K.', ' <=50K'),value='<=50K')    
@@ -167,6 +173,8 @@ for i in df_headers:
     sep="\n  ", end="\n\n")
     
 print("Summary Statistic's:\n",round(df_census.describe().unstack(),2),"\n")
+
+
 
 #%%
 secondary = [
@@ -203,7 +211,7 @@ colormap = sns.diverging_palette(220, 10, as_cmap=True)
 f, ax = plt.subplots(figsize=(10, 10))
 corr = df_census.corr()
 
-sns.heatmap(corr, cmap="coolwarm", annot=True, fmt=".1f",
+sns.heatmap(corr, cmap="coolwarm", annot=True, fmt=".2f",
             xticklabels=corr.columns.values,
             yticklabels=corr.columns.values)
 
@@ -257,6 +265,7 @@ sns.catplot(x="age", y="native_country",
             kind="violin", dodge=True, cut=0, bw=.2)
 
 #%%
+# Assigning age group to the dataframe. 
 df_census['age_group'] = np.select(conditions, choices, default='70-110')
 
 #%%
