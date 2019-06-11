@@ -121,7 +121,8 @@ df_census = pd.read_csv("data/adult-training.csv",
 
 df_census.head(10)
 
-#%% [markdown] First, we'll start with looking at the head of the table to get a
+#%% [markdown] 
+# First, we'll start with looking at the head of the table to get a
 # feel for overall structure and the variables that we're working with. Followed
 # by a count of any missing values within the dataset.  We see that our data has
 # no missing values which is great under most circumstances, but we also found
@@ -189,14 +190,21 @@ print("Summary Statistic's:\n",round(df_census.describe().unstack(),2),"\n")
 education_categories = list(df_census.education.unique())
 print(df_census.groupby(['education','gender'])['gender'].count().unstack())
 
-#%% [markdown] As we can see from our stats, we've got normal ranges on each of
+#%% [markdown] 
+# As we can see from our stats, we've got normal ranges on each of
 # the categories that we've analyzed.  One category of capital_gain has some
 # very large numbers, but we might attribute that to massive investments made by
 # one individual.  After exploring further, alot of the values are 99,999.
 # Which we assume to be a cap on whats reported for capital gains.  We did find
 # that most of the occupations showing such captial growth was mostly
 # executives.  So we're not suprised to see the higher numbers here and won't
-# change the data accordingly. 
+# change the data. 
+
+#%% [markdown] 
+# ### Section 2d: Interesting Visualizations
+#
+# #### Visualize the most interesting attributes (at least 5 attributes, your opinion on what is interesting). Important: Interpret the implications for each visualization. Explain for each attribute why the chosen visualization is appropriate.
+# 
 
 
 #%% 
@@ -204,6 +212,7 @@ print(df_census.groupby(['education','gender'])['gender'].count().unstack())
 sns.set_style('whitegrid')
 df_num = df_census.select_dtypes(include=['float64'])
 df_census.hist(figsize =(14,12))
+
 #%%
 secondary = [
     'education',
