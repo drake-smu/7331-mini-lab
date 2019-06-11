@@ -431,7 +431,9 @@ sns.catplot(x="age", y="native_country",
 #%% [markdown] 
 #
 # While there's alot going on in this chart,  a few things stand out to us.  One
-# is the amount of age 30 to 50 European women who work in the US.  
+# is the amount of age 30 to 50 European women who work in the US.  I have no
+# clue what to say about htis plot.  It just looks cool ok. 
+
 
 #%%
 df_cols = [
