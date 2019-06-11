@@ -639,8 +639,8 @@ def print_performance(df_t,df_p, verbose=1):
 # To start out we train a logistic regression model using 
 # simple dummy variables to encode the categorical features
 # in the data set for each of their k-1 levels.
-
-# Now lets  explain some of the precision outputs from our initial run. 
+#
+# Now lets explain some of the precision outputs that we will be evaluating. 
 # * precision - this is the ratio of the number of true positives and false positives.
 # * recall - this is the ratio of the number of true positives and false negatives
 # * f1-score - the harmonic mean of the precision and recall.
@@ -693,9 +693,10 @@ predictions2 = model2.predict(X_test2)
 print_performance(y_test2,predictions2,0)
 
 # %% [markdown] 
-# 
-# We see similar metrics to the previous LR run, with very little
-# movement and a slight (.001) drop in accuracy.  
+#
+# We see similar metrics to the previous LR run, with very little movement and a
+# slight (.001) drop in accuracy. Our log loss increased slightly (.02) As such
+# it would appear the scaling effect didn't change the regression by much.  
 
 # %% [markdown]
 # # Support Vector Machine (SVM)
