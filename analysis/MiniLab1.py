@@ -831,6 +831,14 @@ print_performance(y_test2,svm_max_predictions,0)
 # ### Section 3c: Interpret Feature Importance
 #
 # #### Use the weights from logistic regression to interpret the importance of different features for the classification task. Explain your interpretation in detail. Why do you think some variables are more important?
+# 
+# Below are the weights for the coefficients of our scaled LR model.
+# %% 
+print("Coefs: ", model2.steps[1][1].coef_)
+print("Intercept: ", model2.steps[1][1].intercept_)
+scaler = model2.get_
+
+# %% [markdown] 
 
 
 # %% [markdown] 
