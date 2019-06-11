@@ -208,8 +208,14 @@ for i in secondary:
 # we assume to be a cap on whats reported for capital gains.  We did find that
 # most of the occupations showing such captial growth was mostly executives.  So
 # we're not suprised to see the higher numbers here and won't change the data.
+#
 # We also wanted to get a look at some of the educational categories by gender
-# to see if one or the other had a higher amount of education.  
+# and income bracket to look for interesting statistics there.  We noticed that
+# males tend to have more education across all grade levels.  We also found that
+# when looking at income bracket and education, a bachelors degree doesn't put
+# you in a better place to make over 50k a year.  In fact, the only categories
+# that did have a higher count in the >50k income bracket were Doctorate,
+# Masters, or a professional school. 
 
 #%% [markdown] 
 # ### Section 2d: Interesting Visualizations
