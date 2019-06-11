@@ -429,6 +429,7 @@ sns.catplot(x="age", y="native_country",
 
 # %% [markdown]
 #
+# TODO - Need more description on this chart.  Its cool, but ehhh
 # While there's alot going on in this chart,  a few things stand out to us.  One
 # is the amount of age 30 to 50 European women who work in the US.  I have no
 # clue what to say about htis plot.  It just looks cool ok. 
@@ -474,7 +475,15 @@ drop_cols = [
 
 target_col = "target"
 
-# %%
+# %% [markdown] 
+# ## Section 3: Logistic Regression and Support Vector Machine
+# ### Section 3a: Create Models
+#
+# #### Create a logistic regression model and a support vector machine model for the classification task involved with your dataset. Assess how well each model performs (use 80/20 training/testing split for your data). Adjust parameters of the models to make them more accurate. If your dataset size requires the use of stochastic gradient descent, then linear kernel only is fine to use. That is, the SGDClassifier is fine to use for optimizing logistic regression and linear support vector machines. For many problems, SGD will be required in order to train the SVM model in a reasonable timeframe. 
+
+# 
+#%% 
+
 # TODO - Undo this and use the train test split function Che used
 # The ruberic specifically mentions to use an 80/20 split.
 
@@ -758,4 +767,20 @@ print_performance(y_test2,svm_max_predictions,0)
 # This difference makes `LinearSVC` the prefered choice for any dataset in the 10's of thousands. 
 # The 'libsvm' solver scales quadradically in compute time with increase in dataset size.
 
+# %% [markdown] 
+# ### Section 3b: Model Advantages
+#
+# #### Discuss the advantages of each model for each classification task. Does one type of model offer superior performance over another in terms of prediction accuracy? In terms of training time or efficiency?
+
+
+# %% [markdown] 
+# ### Section 3c: Interpret Feature Importance
+#
+# #### Use the weights from logistic regression to interpret the importance of different features for the classification task. Explain your interpretation in detail. Why do you think some variables are more important?
+
+
+# %% [markdown] 
+# ### Section 3d: Interpret Support Vectors
+#
+# #### Look at the chosen support vectors for the classification task. Do these provide any insight into the data? Explain. If you used stochastic gradient descent (and therefore did not explicitly solve for support vectors), try subsampling your data to train the SVC model— then analyze the support vectors from the subsampled dataset.
 
