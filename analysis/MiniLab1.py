@@ -163,14 +163,16 @@ df_census = df_census.replace(to_replace=(' ?'),value='Other')
 df_census['income_bracket'] = df_census['income_bracket'].apply(lambda x: 1 if x=='>50K' else 0)
 
 #%% [markdown]
-# ### Section 2c: simple Statistics
-# Now that our data has been cleansed of any thing we've found thus far.  Its
-# time to look at the statistics behind our continuous data in order to see if
-# there are any other erroneous values within our dataset.  
-
-#%%
-education_categories = list(df_census.education.unique())
-print(df_census.groupby(['education','gender'])['gender'].count().unstack())
+# ### Section 2c: Simple Statistics
+#
+# #### Visualize appropriate statistics (e.g., range, mode, mean, median, variance, counts) for a subset of attributes. Describe anything meaningful you found from this or if you found something potentially interesting. 
+#
+# Now that our data has been cleansed of any obvious errors, its time to look at
+# the statistics behind our continuous data in order to look for any other
+# errors in the data we might have missed.  We also can get a look at how many
+# variables each of our categorical attributes carry with them.  This will be
+# useful down the line when we start grouping items for our basic EDA charts we
+# would like to produce. 
 
 #%%
 for i in df_headers:
@@ -183,7 +185,25 @@ for i in df_headers:
 print("Summary Statistic's:\n",round(df_census.describe().unstack(),2),"\n")
 
 
+#%%
+education_categories = list(df_census.education.unique())
+print(df_census.groupby(['education','gender'])['gender'].count().unstack())
 
+#%% [markdown] As we can see from our stats, we've got normal ranges on each of
+# the categories that we've analyzed.  One category of capital_gain has some
+# very large numbers, but we might attribute that to massive investments made by
+# one individual.  After exploring further, alot of the values are 99,999.
+# Which we assume to be a cap on whats reported for capital gains.  We did find
+# that most of the occupations showing such captial growth was mostly
+# executives.  So we're not suprised to see the higher numbers here and won't
+# change the data accordingly. 
+
+
+#%% 
+#Histogram charts
+sns.set_style('whitegrid')
+df_num = df_census.select_dtypes(include=['float64'])
+df_census.hist(figsize =(14,12))
 #%%
 secondary = [
     'education',
