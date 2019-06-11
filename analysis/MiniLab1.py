@@ -922,6 +922,8 @@ print("Intercept: ", model1.intercept_)
 #
 # #### Look at the chosen support vectors for the classification task. Do these provide any insight into the data? Explain. If you used stochastic gradient descent (and therefore did not explicitly solve for support vectors), try subsampling your data to train the SVC model— then analyze the support vectors from the subsampled dataset.
 
-
+# We made several attempts at being able to identify the support vectors for our
+# project but sadly we came up short.  We were able to generate the model, but
+# unable to retrieve them from the SVM we tried to use. 
 
 #%%
