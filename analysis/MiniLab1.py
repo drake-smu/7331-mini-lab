@@ -752,11 +752,11 @@ print_performance(y_test2,svm_max_predictions,0)
 #%% [markdown]
 # TODO- PUT ME IN RIGHT SPOT
 ## LinearSVC vs SVC(kernel='linear')  
-# LinearSVC and SVC(kernel='linear') are two similar functions from the sklearn suite.
-# They are both useful for generating Support Vector Classifiers, however the `solver` 
-# mechanism of LinearSVC ('liblinear') is much more scalable compared to that of SVC(kernel='linear') 
+# `LinearSVC` and `SVC(kernel='linear')` are two similar functions from the sklearn suite.
+# They are both useful for generating Support Vector Classifiers, however the solver 
+# mechanism of `LinearSVC` ('liblinear') is much more scalable compared to that of `SVC(kernel='linear')` 
 # ('libsvm') [source](https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html#sklearn.svm.LinearSVC).
-# This difference makes LinearSVC the prefered choice for any dataset in the 10's of thousands. 
-# The libsvm solver scales quadradically in compute time with increase in dataset size.
+# This difference makes `LinearSVC` the prefered choice for any dataset in the 10's of thousands. 
+# The 'libsvm' solver scales quadradically in compute time with increase in dataset size.
 
-#%%
+
