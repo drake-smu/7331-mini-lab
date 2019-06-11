@@ -890,17 +890,31 @@ print("Intercept: ", model2.steps[1][1].intercept_)
 
 # %% [markdown] 
 #
-# The features above are the first 6 of the coefficients within array returned from the model.  
+# The features above are the first 6 of the coefficients within array returned
+# from the model that are the easiest to explain as there isn't any interaction
+# in them. 
 #
 # | workclass  | marital_status | occupation | race       | gender      | relationship |
 # |------------|----------------|------------|------------|-------------|--------------|
 # | 0.35556391 | 0.72176436     | 2.30551077 | 0.25910035 | 0.36871751  | -0.20975679] |
-# 
+#
 #
 # From the above weights, we can see which of the main attributes holds what
-# weight for our second model.  As we found in our EDA exploration it would
-# appear that marital status and occupation are two of the heaviest weights.
-# Which makes sense with what we've seen so far from our analysis.   
+# weight for our second model.  It would appear that marital status and
+# occupation are two of the heaviest weights.  Occupation being 3 times higher.
+# This aligns with our earlier discovery in the EDA section above that the
+# occupation, and marital status play a vital role in how much money an American
+# made in 1994.  Gender race, and work class were all similarly weighted meaning
+# they do positively influence the classifier function but not to a great
+# degree. Lastly relationship had a negative weight on the regression.  This
+# suggests that being married is beneficial for breaking the 50k mark, it still
+# depends on what role you play in the family to decide if you're going to be
+# income generator.  We believe this fits with the classical 1950's mindset of
+# if you are the wife of a family, you would be expected to stay home and be in
+# charge of domestic responsibilities, while the financial one would fall on
+# other members of the family. 
+#
+#
 
 # %% [markdown] 
 # ### Section 3d: Interpret Support Vectors
