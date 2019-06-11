@@ -121,29 +121,26 @@ df_census = pd.read_csv("data/adult-training.csv",
 
 df_census.head(10)
 
-#%% [markdown]
-# 
+#%% [markdown] First, we'll start with looking at the head of the table to get a
+# feel for overall structure and the variables that we're working with. Followed
+# by a count of any missing values within the dataset.  We see that our data has
+# no missing values which is great under most circumstances, but we also found
+# that instead of marking the data with an NA, they did so with a "?.  Our first
+# order of business is to replace those values.  We found counts of ? values in
+# WorkClass, Occupation, and native country.  For now we'll replace them with
+# "Other"
+
+
+
 #%%
 print("Structure of data:\n",df_census.shape,"\n")
 print("Count of missing values:\n",df_census.isnull().sum().sort_values(ascending=False),"\n")
+print("Count of ? values in workclass: " ,df_census.loc[df_census.workclass == ' ?', 'workclass'].count())
+print("Count of ? values in occupation: ", df_census.loc[df_census.occupation == ' ?', 'occupation'].count())
+print("Count of ? values in native_country: ", df_census.loc[df_census.native_country == ' ?', 'native_country'].count())
 
 
-#%%
-for i in df_headers:
-    
-    print(i, 
-    "type: {}".format(df_census[i].dtype),
-    "# unique: {}".format(df_census[i].nunique()),
-    sep="\n  ", end="\n\n")
-    
-print("Summary Statistic's:\n",round(df_census.describe().unstack(),2),"\n")
-
-#%%
-education_categories = list(df_census.education.unique())
-
-print(df_census.groupby(['education','gender'])['gender'].count().unstack())
-
-#%% Data Cleaning (Mostlyche's)
+#%% Data Cleaning (Mostly che's)
 # Change income bracket values that have a . at end and remove space 
 df_census = df_census.replace(to_replace=(' >50K.', ' >50K'),value='>50K')
 df_census = df_census.replace(to_replace=(' <=50K.', ' <=50K'),value='<=50K')    
@@ -156,6 +153,20 @@ df_census = df_census.replace(to_replace=(' ?'),value='Other')
 
 # encoding into 1 and zero variables for income_bracket. 
 df_census['income_bracket'] = df_census['income_bracket'].apply(lambda x: 1 if x=='>50K' else 0)
+#%%
+education_categories = list(df_census.education.unique())
+
+print(df_census.groupby(['education','gender'])['gender'].count().unstack())
+
+#%%
+for i in df_headers:
+    
+    print(i, 
+    "type: {}".format(df_census[i].dtype),
+    "# unique: {}".format(df_census[i].nunique()),
+    sep="\n  ", end="\n\n")
+    
+print("Summary Statistic's:\n",round(df_census.describe().unstack(),2),"\n")
 
 #%%
 secondary = [
