@@ -53,7 +53,7 @@ except:
 # Here we will discuss each attribute and give some description about its ranges. 
 #
 #
-# Category - Description
+# Categorical - Description
 # #### Categorical Attributes 
 # * workclass - Which business sector do they work in?
 # * education - What level of education received?
@@ -429,8 +429,6 @@ sns.catplot(x="age", y="native_country",
 
 # %% [markdown]
 #
-# TODO - Need more description on this chart.  Its cool, but ehhh 
-#
 # While there's alot going on in this chart,  a few things stand out to us.  The
 # native country confirms what we've been seeing all along in the age group of
 # the workforce.  The <50k income bracket is mostly comprised of younger
@@ -652,6 +650,12 @@ stop1 = timeit.default_timer()
 t1 = stop1-start1
 # print(classification_report(y_test,predictions1))
 # print("Accuracy:",accuracy_score(y_test, predictions1))
+
+coef_dict = {}
+for coef, feat in zip(model1.coef_[0,:],['workclass', 'marital_status', 'occupation', 'race', 'gender', 'relationship']):
+    coef_dict[feat] = coef
+
+# print("The coefficients and their weights are: ", coef_dict.items())
 # print("Coefs: ", model1.coef_[0])
 # print("Intercept: ", model1.intercept_)
 # print_performance(y_test,predictions1,0)
@@ -702,7 +706,6 @@ t2 = stop2-start2
 # print(classification_report(y_test2,predictions2))
 # print("Accuracy:",accuracy_score(y_test2, predictions2))
 
-print("Feature names: ", model2.steps[1][1])
 print("Coefs: ", model2.steps[1][1].coef_)
 print("Intercept: ", model2.steps[1][1].intercept_)
 # print_performance(y_test2,predictions2,0)
