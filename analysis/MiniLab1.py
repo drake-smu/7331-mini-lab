@@ -139,14 +139,14 @@ print("Count of ? values in workclass: " ,df_census.loc[df_census.workclass == '
 print("Count of ? values in occupation: ", df_census.loc[df_census.occupation == ' ?', 'occupation'].count())
 print("Count of ? values in native_country: ", df_census.loc[df_census.native_country == ' ?', 'native_country'].count())
 
-#%% [markdown] While our missing values count is very low, we now must change
+#%% [markdown] 
+# While our missing values count is very low, we now must change
 # all the ? entries to other in order not cause further errors.  We'll also be
 # grouping each individual native country into their respective continent.  We
 # feel that grouping as such will give us more insight into how U.S. immigrants
 # fare in the job market.  We'll also introduce a pair plot to look in the
 # visualization section to look for any outliers.  Which spoiler alert, it
-# doesn't look like we have many.  
-#
+# doesn't look like we have any that cause great concern. 
 
 #%% Data Cleaning 
 # Change income bracket values that have a . at end and remove space 
@@ -161,9 +161,12 @@ df_census = df_census.replace(to_replace=(' ?'),value='Other')
 
 # encoding into 1 and zero variables for income_bracket. 
 df_census['income_bracket'] = df_census['income_bracket'].apply(lambda x: 1 if x=='>50K' else 0)
+
+#%% [markdown]
+# ### Section 2c: Describe the meaning and type of data for each attribute
+
 #%%
 education_categories = list(df_census.education.unique())
-
 print(df_census.groupby(['education','gender'])['gender'].count().unstack())
 
 #%%
