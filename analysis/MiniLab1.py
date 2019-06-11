@@ -361,7 +361,7 @@ g.add_legend();
 #
 
 #%%
-df_age = df_census.loc[:,['gender', 'age', 'income_bracket']]
+df_age = df_census.loc[:,['gender', 'age', 'income_bracket', 'hours_per_week']]
 conditions = [
     (df_age['age'] < 20),
     (df_age['age'] < 30),
@@ -381,7 +381,7 @@ sns.countplot(x='age_group',
     order=choices)
 #%% [markdown] 
 #
-# Well the first thing we're drawn too is that no 10-20 year olds are making
+# The first thing we're drawn too is that not many 10-20 year olds are making
 # over 50k!  What a surprise.  Its interesting how the two income groups tend to
 # converge once age groups get to the 40-50 range, but then both steadily
 # decline afterwards.  This follows suit with the average retirement age in
@@ -390,22 +390,32 @@ sns.countplot(x='age_group',
 # that mark by 40, then chances are its gonna get a bit harder to do so from
 # then on.  
 #
-
+# The next plot deals looks at how these age groups fare with hours per week
+# worked.  We were interested in seeing if you work longer hours, does it pay
+# and at what ages would that be most beneficial?  
 #%%
-# Assigning age group to the dataframe. 
-df_census['age_group'] = np.select(conditions, choices, default='70-110')
+
 # Box Plot of age group by income bracket.
 
 plt.figure(figsize=(10,8), dpi= 80)
 sns.boxplot(x='age_group', y='hours_per_week', 
-            data=df_census, hue='income_bracket',
+            data=df_age, hue='income_bracket',
             order=choices,palette="tab10")
 
 # Decoration
-plt.title('Age Group Hours per week by income_bracket', fontsize=22)
+plt.title('Age Group Hours per week by income bracket', fontsize=22)
 plt.legend(title='Income_Bracket')
 plt.show()
 #%% [markdown]
+#
+# We see a fairly similar trend from ages 20 to 60.  That if you do want to make
+# more money, its going to come at a cost of working longer hours.  We also see
+# the <50k income group exhibit some interesting behavior that their hours never
+# really creep much higher than the 40 hour per week mark.  Suggesting that if
+# you do make less money, than you probably won't have much opportunity to work
+# longer hours to make any extra money.  Just another limiting factor of being
+# in the smaller income bracket.  
+#
 # Next, we implemented a voilin plot to determine what native countries people
 # immigrated from and how their income distribution fared in the US.  Remember
 # previously we assigned each native country to their native continent so really
