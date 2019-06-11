@@ -269,7 +269,9 @@ sns.countplot(x='income_bracket',
     data=df_census,
     palette='RdBu_r')
 
-#%% [markdown] This bar chart represents income bracket by marital status.
+#%% [markdown] 
+# 
+# This bar chart represents income bracket by marital status.
 # Interesting to see a few things, first off the <=50k income bracket highest
 # counts come from the "Never-married" status.  This suggests that marriage does
 # in fact come with alot of financial benefit, as you can see is relevant on the
@@ -298,13 +300,16 @@ sns.heatmap(corr, cmap="coolwarm", annot=True, fmt=".2f",
             yticklabels=corr.columns.values)
 
 #%% [markdown] 
+#
 # The correlation heatmap above shows that we have very little
 # correlation within our dataset.  No two attributes scored above 0.2
 # correlation.  The only ones that look to be slightly related are that of
 # education_num and hours_per_week (0.15).  Which leads to some interesting
 # possiblities if the amount of education you received determined the hours you
 # worked.  We speculate that the more education received, the longer the hours
-# you might work.  To check that, lets make a quick plot.  
+# you might work.  To check that, lets make a dot plot to view means of hours
+# worked per the education category.
+
 #%%
 
 df = df_census[['hours_per_week', 'education']].groupby('education').apply(lambda x: x.mean())
@@ -317,13 +322,21 @@ ax.hlines(y=df.index, xmin=30, xmax=50, color='gray', alpha=0.7, linewidth=1, li
 ax.scatter(y=df.index, x=df.hours_per_week, s=75, color='firebrick', alpha=0.7)
 
 # Title, Label, Ticks and Ylim
-ax.set_title('Dot Plot for hours per week', fontdict={'size':22})
+ax.set_title('Dot Plot for hours per week by education level', fontdict={'size':22})
 ax.set_xlabel('hours per week')
 ax.set_yticks(df.index)
 ax.set_yticklabels(df.education.str.title(), fontdict={'horizontalalignment': 'right'})
 ax.set_xlim(30, 50)
 plt.show()
-
+#%% [markdown]
+# 
+# Indeed we see our suspicion confirmed.  As you increase your
+# educational level, your hours per week will too increase.  Doctorates and
+# Prof-school being the highest.  The interesting thing to note here is the
+# "Prof-School" category.  Which is defined as a trade school.  Therefore, Those
+# with the highest working hours are thoes of higher or specialized education.
+# Now lets move onto the pairplot and start to get a feel for how our categorial
+# data is distrubuted.  
 #%%
 # Pairplot matrix.  
 #%%
