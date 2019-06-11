@@ -159,7 +159,7 @@ df_census = df_census.replace(to_replace=(' Columbia', ' Ecuador', ' Peru'),valu
 df_census = df_census.replace(to_replace=(' ?'),value='Other') 
 
 # encoding into 1 and zero variables for income_bracket. 
-df_census['income_bracket'] = df_census['income_bracket'].apply(lambda x: 1 if x=='>50K' else 0)
+# df_census['income_bracket'] = df_census['income_bracket'].apply(lambda x: 1 if x=='>50K' else 0)
 
 #%% [markdown]
 # ### Section 2c: Simple Statistics
@@ -188,32 +188,6 @@ print("Summary Statistic's:\n",round(df_census.describe().unstack(),2),"\n")
 education_categories = list(df_census.education.unique())
 print(df_census.groupby(['education','gender'])['gender'].count().unstack())
 
-#%% [markdown] 
-# As we can see from our stats, we've got normal ranges on each of
-# the categories that we've analyzed.  One category of capital_gain has some
-# very large numbers, but we might attribute that to massive investments made by
-# one individual.  After exploring further, alot of the values are 99,999.
-# Which we assume to be a cap on whats reported for capital gains.  We did find
-# that most of the occupations showing such captial growth was mostly
-# executives.  So we're not suprised to see the higher numbers here and won't
-# change the data. 
-
-#%% [markdown] 
-# ### Section 2d: Interesting Visualizations
-#
-# #### Visualize the most interesting attributes (at least 5 attributes, your opinion on what is interesting). Important: Interpret the implications for each visualization. Explain for each attribute why the chosen visualization is appropriate.
-#
-# Now we can start analyzing different attributes to see if anything stands out
-# to us.  To start we'll begin with some histograms of the numerical attributes in order to look at skew
-
-
-
-#%% 
-#Histogram charts
-sns.set_style('whitegrid')
-df_num = df_census.select_dtypes(include=['float64'])
-df_census.hist(figsize =(14,12))
-
 #%%
 secondary = [
     'education',
@@ -226,6 +200,33 @@ secondary = [
     ]
 for i in secondary:
     print(df_census.groupby([i,'income_bracket'])[i].count().unstack(), end="\n\n")
+
+#%% [markdown] As we can see from our stats, we've got normal ranges on each of
+# the categories that we've analyzed.  One category of capital_gain has some
+# very large numbers, but we might attribute that to massive investments made by
+# one individual.  After exploring further, alot of the values are 99,999. Which
+# we assume to be a cap on whats reported for capital gains.  We did find that
+# most of the occupations showing such captial growth was mostly executives.  So
+# we're not suprised to see the higher numbers here and won't change the data.
+# We also wanted to get a look at some of the educational categories by gender
+# to see if one or the other had a higher amount of education.  
+
+#%% [markdown] 
+# ### Section 2d: Interesting Visualizations
+#
+# #### Visualize the most interesting attributes (at least 5 attributes, your opinion on what is interesting). Important: Interpret the implications for each visualization. Explain for each attribute why the chosen visualization is appropriate.
+#
+# Now we can start analyzing different attributes to see if anything stands out
+# to us.  To start we'll begin with some histograms of the numerical attributes
+# in order to look at the ranges and if we have any skew.  
+
+
+#%% 
+#Histogram charts
+sns.set_style('whitegrid')
+df_num = df_census.select_dtypes(include=['float64'])
+df_census.hist(figsize =(14,12))
+
 
 #%%
 ## boxplots of income by gender dist.
