@@ -581,7 +581,7 @@ X_test2 = df_test2.drop(columns=["income_bracket",target_col])
 y_test2 = df_test2[target_col]
 
 # %% [markdown]
-# ## Linear Regression
+# ## Logistic Regression
 
 # %%
 # Import sklearn libs 
@@ -622,7 +622,7 @@ def print_performance(df_t,df_p, verbose=1):
     end="\n\n"+("="*80))
 
 # %% [markdown]
-# ### Logistic Regression (dummy variables)
+# ## Logistic Regression (dummy variables)
 # To start out we train a logistic regression model using 
 # simple dummy variables to encode the categorical features
 # in the data set for each of their k-1 levels.
