@@ -639,8 +639,27 @@ def print_performance(df_t,df_p, verbose=1):
 # To start out we train a logistic regression model using 
 # simple dummy variables to encode the categorical features
 # in the data set for each of their k-1 levels.
-#
-# Now lets explain some of the precision outputs that we will be evaluating. 
+
+#%%
+import timeit
+
+# %%
+start1 = timeit.default_timer()
+model1 = LogisticRegression(solver='liblinear')
+model1.fit(X_train,y_train)
+predictions1 = model1.predict(X_test)
+stop1 = timeit.default_timer()
+t1 = stop1-start1
+# print(classification_report(y_test,predictions1))
+# print("Accuracy:",accuracy_score(y_test, predictions1))
+#print("Coefs: ", model1.coef_[0])
+# print("Intercept: ", model1.intercept_)
+print_performance(y_test,predictions1,0)
+print("\n runtime: ", t1)
+
+# %% [markdown]
+
+# Now lets take the time to explain some of the precision outputs from our initial run. 
 # * precision - this is the ratio of the number of true positives and false positives.
 # * recall - this is the ratio of the number of true positives and false negatives
 # * f1-score - the harmonic mean of the precision and recall.
@@ -649,21 +668,9 @@ def print_performance(df_t,df_p, verbose=1):
 # * Log Loss - the negative log-likelihood of correct classification given the classifier prediction.
 #
 # 
-# These are the metrics we'll be tracking as we improve our model.
-# %%
-model1 = LogisticRegression(solver='liblinear')
-model1.fit(X_train,y_train)
-predictions1 = model1.predict(X_test)
-# print(classification_report(y_test,predictions1))
-# print("Accuracy:",accuracy_score(y_test, predictions1))
-# print("Coefs: ", model1.coef_)
-# print("Intercept: ", model1.intercept_)
-print_performance(y_test,predictions1,0)
-
-print("Coefs: ", model1.coef_[0])
-print("Intercept: ", model1.intercept_[0])
-
-# %% [markdown]
+# These are the metrics we'll be tracking as we improve our model and will
+# provide a summary towards the end. 
+#
 #
 # ### Logistic Regression (encoding and scaling)
 # The next step towards improving our logistic regression 
@@ -682,22 +689,27 @@ model2 = make_pipeline(
     LogisticRegression(solver='liblinear'))
 
 # Fit the data
-model2.fit(X_train2,y_train2)
 
+start2 = timeit.default_timer()
+model2.fit(X_train2,y_train2)
 # Calculate predictions
 predictions2 = model2.predict(X_test2)
+
+stop2 = timeit.default_timer()
+t2 = stop2-start2
 
 # print(classification_report(y_test2,predictions2))
 # print("Accuracy:",accuracy_score(y_test2, predictions2))
 
+# TODO: Need to read docs to confirm i can use Pipeline like this.
+# print("Coefs: ", model2[1].coef_)
+# print("Intercept: ", model2[1].intercept_)
 print_performance(y_test2,predictions2,0)
-print("Coefs: ", model2.steps[1][1].coef_)
-print("Intercept: ", model2.steps[1][1].intercept_)
-# %% [markdown] 
-#
-# We see similar metrics to the previous LR run, with very little movement and a
-# slight (.001) drop in accuracy. Our log loss increased slightly (.02) As such
-# it would appear the scaling effect didn't change the regression by much.  
+int("\n runtime: ", t2)
+
+model2.
+# %% [markdown]
+
 
 # %% [markdown]
 # # Support Vector Machine (SVM)
@@ -711,47 +723,46 @@ print("Intercept: ", model2.steps[1][1].intercept_)
 
 # %%
 svm1 = LinearSVC(C=1.0, max_iter=10000)
+
+start3 = timeit.default_timer()
 svm1.fit(X_train, y_train)
 svm1_predictions = svm1.predict(X_test)
 
+stop3 = timeit.default_timer()
+t3 = stop3-start3
 print_performance(y_test,svm1_predictions,0)
 
+print("\n runtime: ", t3)
 
 # %% [markdown]
-#
-# In comparison the LR model, simple SVM shows a few things.  We see a 0.02 drop
-# in accuracy, as well as an 0.7 increase in log loss. (Bad in both cases)
-# Suggesting that the simple SVM doesn't perform as well as the LR model.  So we
-# will continue with feature scaling on SVM to try and improve upon that. 
-#
-#
 # ## SVM (with feature scaling)
-# Similar to other classification methods, SVM's can be impacted by varying
-# units and magnitudes of standard deviation across features. To increase model
-# accuracy the features are transformed similarly to how they were in the above
-# Logistic Regression model.
+# Similar to other classification methods, SVM's can be impacted 
+# by varying units and magnitudes of standard deviation across 
+# features. To increase model accuracy the features are transformed 
+# similarly to how they were in the above Logistic Regression model.
 # %%
 svm2 = make_pipeline(
         preprocess,
         LinearSVC(C=1.0, max_iter=10000))
 
+start4 = timeit.default_timer()
 svm2.fit(X_train2, y_train2)
 svm2_predictions = svm2.predict(X_test2)
+
+stop4 = timeit.default_timer()
+t4 = stop4-start4
 print_performance(y_test2,svm2_predictions,0)
 
+print("\n runtime: ", t4)
+
 # %% [markdown]
-#
-# Here we see an improvement that puts us back in the same performance range as
-# the LR scaled model, with an even lower log loss! (.06)  Which is definitely a
-# step in the right direction.  Precision, recall, and f1-score are all about
-# the same as our LR scaled model. 
-#
 # ## SVM (optimizing C parameter)
-# Outside of data standardization, accuracy can also be increased through model
-# tuning. In this case, the C parameter, or Penalty parameter C of the error
-# term, can be tuned to help with over and under fitting of the model. To tune
-# the model a plot of prediction scores vs C values will illustrate the optimal
-# C value for the given model.
+# Outside of data standardization, accuracy can also be increased 
+# through model tuning. In this case, the C parameter, or Penalty 
+# parameter C of the error term, can be tuned to help with over and 
+# under fitting of the model. To tune the model a plot of prediction 
+# scores vs C values will illustrate the optimal C value for the 
+# given model.
 # %%
 C_s = np.logspace(-10, 0, 10)
 
@@ -793,16 +804,17 @@ svm_max = make_pipeline(
             )
         )
 
+start5 = timeit.default_timer()
 svm_max.fit(X_train2, y_train2)
 svm_max_predictions = svm_max.predict(X_test2)
 
+stop5 = timeit.default_timer()
+t5 = stop5-start5
 print_performance(y_test2,svm_max_predictions,0)
-# %% [markdown] Luckily we saved our best model for last.  Optimizing the
-# c-parameter slightly reduced our log loss, but again, most of the other
-# categories didn't move much either way. 
-#
 
-# %% [markdown] 
+print("\n runtime: ", t5)
+
+
 
 # TODO - From the looks of the visuals on the assignment, I think we may need 
 # a probability plane. So far the best solution for this appears to be by performing
@@ -811,21 +823,59 @@ print_performance(y_test2,svm_max_predictions,0)
 
 # %% [markdown]
 # TODO- PUT ME IN RIGHT SPOT
-# # LinearSVC vs SVC(kernel='linear')  
-# `LinearSVC` and `SVC(kernel='linear')` are two similar functions from the sklearn suite.
-# They are both useful for generating Support Vector Classifiers, however the solver 
-# mechanism of `LinearSVC` ('liblinear') is much more scalable compared to that of `SVC(kernel='linear')` 
-# ('libsvm') [source](https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html#sklearn.svm.LinearSVC).
-# This difference makes `LinearSVC` the prefered choice for any dataset in the 10's of thousands. 
-# The 'libsvm' solver scales quadradically in compute time with increase in dataset size.
 
 # %% [markdown] 
 # ### Section 3b: Model Advantages
 #
 # #### Discuss the advantages of each model for each classification task. Does one type of model offer superior performance over another in terms of prediction accuracy? In terms of training time or efficiency?
 #
+# ### Comparison of each model:
+#%% 
+print('First Model:  Simple Logistic Regression \n ------------------------------------------------------------------------------------ \n')
 
+res=print_performance(y_test,predictions1,0)
+rest=print("\n runtime of seond model: ", t1)
+print('Second Model: Logistic Regression with Encoding and scaling\n ------------------------------------------------------------------------------------ \n')
+res2=print_performance(y_test2,predictions2,0)
+rest2=print("\n runtime of seond model: ", t2)
+print('Third Model: Simple SVM\n ------------------------------------------------------------------------------------ \n')
+res3=print_performance(y_test,svm1_predictions,0)
+rest3=print("\n runtime of third model: ", t3)
+print('Fourth Model SVM with Feature Scaling \n ------------------------------------------------------------------------------------ \n')
+res4=print_performance(y_test2,svm2_predictions,0)
+rest4=print("\n runtime of fourth model: ", t4)
 
+print('Fifth Model: SVM with Optimized C parameter\n ------------------------------------------------------------------------------------ \n')
+res5=print_performance(y_test2,svm_max_predictions,0)
+rest5=print("\n runtime of fifth model: ", t5)
+
+# %% [markdown]
+# ### Model Advantages
+# #### Logistic Regression
+# We will first compare the two Logistic Regression models. We see that both of them
+# have an accuracy of about 0.85, and a Log Loss of about 5.1. However, the model with encoding and scaling, while
+# slightly less accurate than the model without, was a bit faster. For practical purposes, this is unimportant, but
+# with more data, this may become important to remember. We will consider that overall, these two models are interchangeable.
+# #### SVM
+# Here we have much more interesting results, in order of highest accuracy/lowest log loss, we see that the SVM
+# with an optimized C parameter performed with about the same (but slightly better) accuracy compared to the SVM with Feature Scaling.
+# Both of these models significantly outperformed the simple SVM, which is logical as the simple SVM is in no way optimized.
+# The matter of runtime is much more important here. The simple SVM took a whopping 38 seconds, while the slightly optimized feature scaled SVM took 7.2 seconds. The final
+# SVM, with the optimized C parameter ran at about 0.7 seconds, nearly as fast as logistic regression. With this being said, it is clear that the most accurate and most performant, and therefore
+# Most advantageous SVM model is the one with the optimized C parameter.
+# #### An Interlude on SVMs: LinearSVC vs SVC(kernel='linear')  
+# `LinearSVC` and `SVC(kernel='linear')` are two similar functions from the sklearn suite.
+# They are both useful for generating Support Vector Classifiers, however the solver 
+# mechanism of `LinearSVC` ('liblinear') is much more scalable compared to that of `SVC(kernel='linear')` 
+# ('libsvm') [source](https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html#sklearn.svm.LinearSVC).
+# This difference makes `LinearSVC` the prefered choice for any dataset in the 10's of thousands. 
+# The 'libsvm' solver scales quadradically in compute time with increase in dataset size.
+# #### Comparison of all models
+# We will compare the best of the SVMs, the one with the optimized C parameter, with the Logistic Regression models. The C-optimized SVM is moderately representative of the predictive
+# performance of the feature-scaled SVM, except that it is way faster, and thus serves as a good benchmark to compare with logistic regression.\
+# The Logistic Regression Models had an accuracy/log loss of about 0.85/5.1, while the SVM (C-optimized) reported scores of 0.85/5.0. This means that the SVM had a slightly greater degree of predictive accuracy.
+# However, for this slight improvement, we can see in the tables aboce that it is also twice as slow. This means that in cases where a quick, decent prediction is needed with this dataset,
+# it is far better to use logistic regression. When we need stringency and the absolute best accuracy possible, it is likley better to use a SVM, even at the cost of reduced speed.
 
 # %% [markdown] 
 # ### Section 3c: Interpret Feature Importance
