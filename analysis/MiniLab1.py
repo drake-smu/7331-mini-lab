@@ -486,7 +486,15 @@ target_col = "target"
 #
 # #### Create a logistic regression model and a support vector machine model for the classification task involved with your dataset. Assess how well each model performs (use 80/20 training/testing split for your data). Adjust parameters of the models to make them more accurate. If your dataset size requires the use of stochastic gradient descent, then linear kernel only is fine to use. That is, the SGDClassifier is fine to use for optimizing logistic regression and linear support vector machines. For many problems, SGD will be required in order to train the SVM model in a reasonable timeframe. 
 
-# 
+#  Logistic regression (LR) and support vector machines (SVM) are two of the
+#  more popular classification methods available for data scientists today. The
+#  basics behind LR is that it takes the output of a linear model and crams it
+#  into a logistic function to give it a probablity of 0 to 1 (but never
+#  equaling 0 or 1).  SVM on the other hand, tries to find the hyper plane that
+#  has the maximum margin that can classify points in an n-(number of features)
+#  space.  Basically, SVM gives a binary class output, while LR looks at
+#  probabilities for its classification.  We'll start with logistic regression,
+#  and then move into support vector machines. 
 #%% 
 
 # TODO - Undo this and use the train test split function Che used
@@ -642,6 +650,9 @@ predictions1 = model1.predict(X_test)
 # print("Intercept: ", model1.intercept_)
 print_performance(y_test,predictions1,0)
 # %% [markdown]
+
+# Now lets take the time to explain some of the accuracy for each class. 
+
 # ### Logistic Regression (encoding and scaling)
 # The next step towards improving our logistic regression 
 # model is to rescale the continuous features in the dataset.
@@ -671,6 +682,10 @@ predictions2 = model2.predict(X_test2)
 # print("Coefs: ", model2[1].coef_)
 # print("Intercept: ", model2[1].intercept_)
 print_performance(y_test2,predictions2,0)
+
+# %% [markdown]
+
+
 # %% [markdown]
 # # Support Vector Machine (SVM)
 # An alternative classification method to logistic regression modeling 
@@ -777,14 +792,7 @@ print_performance(y_test2,svm_max_predictions,0)
 #
 # #### Discuss the advantages of each model for each classification task. Does one type of model offer superior performance over another in terms of prediction accuracy? In terms of training time or efficiency?
 #
-#  Logistic regression (LR) and support vector machines (SVM) are two of the
-#  more popular classification methods available for data scientists today. The
-#  basics behind LR is that it takes the output of a linear model and crams it
-#  into a logistic function to give it a probablity of 0 to 1 (but never
-#  equaling 0 or 1).  SVM on the other hand, tries to find the hyper plane that
-#  has the maximum margin that can classify points in an n-(number of features)
-#  space.  Basically, SVM gives a binary class output, while LR looks at probabilities
-#  for its classification.  
+
 
 
 # %% [markdown] 
