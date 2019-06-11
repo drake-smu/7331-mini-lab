@@ -413,8 +413,8 @@ plt.show()
 # the <50k income group exhibit some interesting behavior that their hours never
 # really creep much higher than the 40 hour per week mark.  Suggesting that if
 # you do make less money, than you probably won't have much opportunity to work
-# longer hours to make any extra money.  Just another limiting factor of being
-# in the smaller income bracket.  
+# longer hours for extra income.  Another limiting factor of being
+# in the lower income bracket.  
 #
 # Next, we implemented a voilin plot to determine what native countries people
 # immigrated from and how their income distribution fared in the US.  Remember
@@ -431,7 +431,7 @@ sns.catplot(x="age", y="native_country",
 #%% [markdown] 
 #
 # While there's alot going on in this chart,  a few things stand out to us.  One
-# is the amount of age 30 to 50 European women who work in the US.
+# is the amount of age 30 to 50 European women who work in the US.  
 
 #%%
 df_cols = [
