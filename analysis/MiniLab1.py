@@ -660,6 +660,9 @@ predictions1 = model1.predict(X_test)
 # print("Intercept: ", model1.intercept_)
 print_performance(y_test,predictions1,0)
 
+print("Coefs: ", model1.coef_[0])
+print("Intercept: ", model1.intercept_[0])
+
 # %% [markdown]
 #
 # ### Logistic Regression (encoding and scaling)
@@ -687,11 +690,9 @@ predictions2 = model2.predict(X_test2)
 # print(classification_report(y_test2,predictions2))
 # print("Accuracy:",accuracy_score(y_test2, predictions2))
 
-# TODO: Need to read docs to confirm i can use Pipeline like this.
-# print("Coefs: ", model2[1].coef_)
-# print("Intercept: ", model2[1].intercept_)
 print_performance(y_test2,predictions2,0)
-
+print("Coefs: ", model2.steps[1][1].coef_)
+print("Intercept: ", model2.steps[1][1].intercept_)
 # %% [markdown] 
 #
 # We see similar metrics to the previous LR run, with very little movement and a
@@ -714,6 +715,8 @@ svm1.fit(X_train, y_train)
 svm1_predictions = svm1.predict(X_test)
 
 print_performance(y_test,svm1_predictions,0)
+
+
 # %% [markdown]
 #
 # In comparison the LR model, simple SVM shows a few things.  We see a 0.02 drop
