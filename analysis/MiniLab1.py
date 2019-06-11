@@ -312,8 +312,8 @@ sns.heatmap(corr, cmap="coolwarm", annot=True, fmt=".2f",
 
 # %%
 
-df = df_census[['hours_per_week', 'education']].groupby('education').apply(lambda x: x.mean())
-df.sort_values('hours_per_week', inplace=True)
+df = df_census[['hours_per_week', 'education','education_num']].groupby('education').apply(lambda x: x.mean())
+df.sort_values('education_num', inplace=True)
 df.reset_index(inplace=True)
 
 # Draw plot
