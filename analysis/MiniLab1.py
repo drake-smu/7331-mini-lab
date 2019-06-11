@@ -776,6 +776,15 @@ print_performance(y_test2,svm_max_predictions,0)
 # ### Section 3b: Model Advantages
 #
 # #### Discuss the advantages of each model for each classification task. Does one type of model offer superior performance over another in terms of prediction accuracy? In terms of training time or efficiency?
+#
+#  Logistic regression (LR) and support vector machines (SVM) are two of the
+#  more popular classification methods available for data scientists today. The
+#  basics behind LR is that it takes the output of a linear model and crams it
+#  into a logistic function to give it a probablity of 0 to 1 (but never
+#  equaling 0 or 1).  SVM on the other hand, tries to find the hyper plane that
+#  has the maximum margin that can classify points in an n-(number of features)
+#  space.  Basically, SVM gives a binary class output, while LR looks at probabilities
+#  for its classification.  
 
 
 # %% [markdown] 
