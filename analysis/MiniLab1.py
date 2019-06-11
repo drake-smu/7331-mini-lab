@@ -50,7 +50,7 @@ except:
 # %% [markdown]
 # ## Section 2: Data Understanding
 # ### Section 2a: Describe the meaning and type of data for each attribute
-# Here we will dicuss each attribute and give some description about its ranges. 
+# Here we will discuss each attribute and give some description about its ranges. 
 #
 #
 # Category - Description
@@ -69,8 +69,8 @@ except:
 # * age - How old is the subject?
 # * fnlwgt - Sampling weight of observation  
 # * education_num - numerical encoding of education variable
-# * capital_gain - income from investment sources, seperate from wages/salary
-# * capital_loss - losses from investment sources, seperate from wages/salary
+# * capital_gain - income from investment sources, separate from wages/salary
+# * capital_loss - losses from investment sources, separate from wages/salary
 # * hours_per_week - How many hours a week did they work? 
 #
 #
@@ -126,7 +126,7 @@ df_census.head(10)
 # no missing values which is great under most circumstances, but we also found
 # that instead of marking the data with an NA, they did so with a "?.  Our first
 # order of business is to replace those values.  We found counts of ? values in
-# WorkClass, Occupation, and native country.  For now we'll replace them with
+# WorkClass, Occupation, and native country.  For now, we'll replace them with
 # "Other"
 #
 #
@@ -166,7 +166,7 @@ df_census = df_census.replace(to_replace=(' ?'),value='Other')
 #
 # #### Visualize appropriate statistics (e.g., range, mode, mean, median, variance, counts) for a subset of attributes. Describe anything meaningful you found from this or if you found something potentially interesting. 
 #
-# Now that our data has been cleansed of any obvious errors, its time to look at
+# Now that our data has been cleansed of any obvious errors, it's time to look at
 # the statistics behind our continuous data in order to look for any other
 # errors in the data we might have missed.  We also can get a look at how many
 # variables each of our categorical attributes carry with them.  This will be
@@ -205,9 +205,9 @@ for i in secondary:
 # the categories that we've analyzed.  One category of capital_gain has some
 # very large numbers, but we might attribute that to massive investments made by
 # one individual.  After exploring further, alot of the values are 99,999. Which
-# we assume to be a cap on whats reported for capital gains.  We did find that
-# most of the occupations showing such captial growth was mostly executives.  So
-# we're not suprised to see the higher numbers here and won't change the data.
+# we assume to be a cap on what's reported for capital gains.  We did find that
+# most of the occupations showing such capital growth was mostly executives.  So
+# we're not surprised to see the higher numbers here and won't change the data.
 #
 # We also wanted to get a look at some of the educational categories by gender
 # and income bracket to look for interesting statistics there.  We noticed that
@@ -224,7 +224,7 @@ for i in secondary:
 #
 # Now we can start analyzing different attributes to see if anything stands out
 # to us.  To start we'll begin with some histograms of the numerical attributes
-# in order to look at the ranges aagain and check for skew.  We'll also look at
+# in order to look at the ranges again and check for skew.  We'll also look at
 # some box plots of gender and marital status to continue our exploration into
 # those categories. 
 
@@ -241,9 +241,9 @@ df_census.hist(figsize =(14,12))
 # numerical categories.  Most of the workforce is from 20 to 50.  Educational
 # limitations look to have the largest difference between 8th - 9th grade.
 # Implying that high school drop out rates are a factor in the dataset.   Hours
-# per week also exhibited a large distrubution around 40 hours a week, which
+# per week also exhibited a large distribution around 40 hours a week, which
 # fits common conception of American work hours.  fnl weight also showed some
-# strange dedencies in the upper ranges of the dataset, but seeing as its not
+# strange values in the upper ranges of the dataset, but seeing as its not
 # going to be an area of focus for this analysis, we'll omit any changes here.  
 # %%
 ## boxplots of income by gender dist.
@@ -256,10 +256,10 @@ sns.countplot(x='income_bracket',
 # %% [markdown]
 # This bar chart shows us the differences in male and female income based on
 # gender.  We see counts are much higher in both income brackets for males.
-# Suggesting that in 1994, the american workforce sampled had more men than
+# Suggesting that in 1994, the American workforce sampled had more men than
 # women in the workforce.  In the >50k income bracket, males showed an even
 # higher difference between their female counterparts, suggesting that males
-# dominate that income bracket moreso than those in the <=50 income bracket.
+# dominate that income bracket more so than those in the <=50 income bracket.
 #
 # %%
 ## by marital status
@@ -277,9 +277,9 @@ sns.countplot(x='income_bracket',
 # in fact come with alot of financial benefit, as you can see is relevant on the
 # other half of the chart.  As married couples far outmatch any other category
 # counts in the >50k income bracket.  We can confirm this again as most of the
-# divorced, seperated, or widowed people are located in the lower income
+# divorced, separated, or widowed people are located in the lower income
 # bracket.  Suggesting that, if you want to make over 50k, you might
-# want to get yourself a partner, and keep them!
+# want to get yourself a partner and keep them!
 
 # %% [markdown]
 # ### Section 2e: Explore Joint Attributes
@@ -305,9 +305,9 @@ sns.heatmap(corr, cmap="coolwarm", annot=True, fmt=".2f",
 # correlation within our dataset.  No two attributes scored above 0.2
 # correlation.  The only ones that look to be slightly related are that of
 # education_num and hours_per_week (0.15).  Which leads to some interesting
-# possiblities if the amount of education you received determined the hours you
+# possibilities if the amount of education you received determined the hours you
 # worked.  We speculate that the more education received, the longer the hours
-# you might work.  To check that, lets make a dot plot to view means of hours
+# you might work.  To check that, let's make a dot plot to view means of hours
 # worked per the education category.
 
 # %%
@@ -336,7 +336,7 @@ plt.show()
 # "Prof-School" category.  Which is defined as a trade school.  Therefore, Those
 # with the highest working hours are those of higher or specialized education.
 # Now lets move onto the pairplot and start to get a feel for how our categorial
-# data is distrubuted.  
+# data is distributed.  
 # %%
 # Pairplot matrix.
 g = sns.pairplot(df_census,kind="scatter",vars=['age','fnlwgt',
@@ -354,8 +354,8 @@ g.add_legend();
 # capital_loss) have what look to be outliers, but really is the upper class
 # making more money than the rest of us.  The other distributions look to be ok
 # with minmal outliers in them. We see the normal age skew in that the <50k
-# market is usually a younger age group.  So since we're now interested in age
-# groups.  Lets split upt he age groups in bins of 10 years, and see what kind
+# market is usually a younger age group.  Since we're now interested in age
+# groups.  Lets split up the age groups in bins of 10 years, and see what kind
 # of income differences we see. 
 #
 
@@ -384,9 +384,9 @@ sns.countplot(x='age_group',
 # over 50k!  What a surprise.  Its interesting how the two income groups tend to
 # converge once age groups get to the 40-50 range, but then both steadily
 # decline afterwards.  This follows suit with the average retirement age in
-# america of 62 years old.  But the largest jump in those in the >50k group
+# America of 62 years old.  But the largest jump in those in the >50k group
 # looks to happen around age 30 to 40.  Suggesting that if you're not clearing
-# that mark by 40, then chances are its gonna get a bit harder to do so from
+# that mark by 40, then chances are its going to get a harder to do so from
 # then on.  
 #
 # The next plot deals looks at how these age groups fare with hours per week
@@ -407,7 +407,7 @@ plt.legend(title='Income_Bracket')
 plt.show()
 # %% [markdown]
 #
-# We see a fairly similar trend from ages 20 to 60.  That if you do want to make
+# We see a similar trend from ages 20 to 60.  That if you do want to make
 # more money, its going to come at a cost of working longer hours.  We also see
 # the <50k income group exhibit some interesting behavior that their hours never
 # really creep much higher than the 40 hour per week mark.  Suggesting that if
@@ -429,10 +429,15 @@ sns.catplot(x="age", y="native_country",
 
 # %% [markdown]
 #
-# TODO - Need more description on this chart.  Its cool, but ehhh
-# While there's alot going on in this chart,  a few things stand out to us.  One
-# is the amount of age 30 to 50 European women who work in the US.  I have no
-# clue what to say about htis plot.  It just looks cool ok. 
+# TODO - Need more description on this chart.  Its cool, but ehhh 
+#
+# While there's alot going on in this chart,  a few things stand out to us.  The
+# native country confirms what we've been seeing all along in the age group of
+# the workforce.  The <50k income bracket is mostly comprised of younger
+# individuals, with a suprising amount of younger Asian women.  On the subject
+# of women, it would seem that older women make up alot of the >50k when Europe
+# is their native country.  This suggests alot of higher paid women tend to come
+# to the U.S. for better fare opportunity.
 
 
 # %%
@@ -622,7 +627,7 @@ def print_performance(df_t,df_p, verbose=1):
     end="\n\n"+("="*80))
 
 # %% [markdown]
-# ## Logistic Regression (dummy variables)
+# ### Logistic Regression (dummy variables)
 # To start out we train a logistic regression model using 
 # simple dummy variables to encode the categorical features
 # in the data set for each of their k-1 levels.
