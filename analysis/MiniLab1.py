@@ -269,7 +269,9 @@ sns.countplot(x='income_bracket',
     data=df_census,
     palette='RdBu_r')
 
-#%% [markdown] This bar chart represents income bracket by marital status.
+#%% [markdown] 
+# 
+# This bar chart represents income bracket by marital status.
 # Interesting to see a few things, first off the <=50k income bracket highest
 # counts come from the "Never-married" status.  This suggests that marriage does
 # in fact come with alot of financial benefit, as you can see is relevant on the
@@ -298,23 +300,65 @@ sns.heatmap(corr, cmap="coolwarm", annot=True, fmt=".2f",
             yticklabels=corr.columns.values)
 
 #%% [markdown] 
+#
 # The correlation heatmap above shows that we have very little
 # correlation within our dataset.  No two attributes scored above 0.2
 # correlation.  The only ones that look to be slightly related are that of
 # education_num and hours_per_week (0.15).  Which leads to some interesting
-# possiblities if the amount of education you recieved determined the hours you
-# worked.  We speculate that the more education recieved, the longer the hours
-# you might work. 
+# possiblities if the amount of education you received determined the hours you
+# worked.  We speculate that the more education received, the longer the hours
+# you might work.  To check that, lets make a dot plot to view means of hours
+# worked per the education category.
 
+#%%
+
+df = df_census[['hours_per_week', 'education']].groupby('education').apply(lambda x: x.mean())
+df.sort_values('hours_per_week', inplace=True)
+df.reset_index(inplace=True)
+
+# Draw plot
+fig, ax = plt.subplots(figsize=(10,10), dpi= 80)
+ax.hlines(y=df.index, xmin=30, xmax=50, color='gray', alpha=0.7, linewidth=1, linestyles='dashdot')
+ax.scatter(y=df.index, x=df.hours_per_week, s=75, color='firebrick', alpha=0.7)
+
+# Title, Label, Ticks and Ylim
+ax.set_title('Dot Plot for hours per week by education level', fontdict={'size':22})
+ax.set_xlabel('hours per week')
+ax.set_yticks(df.index)
+ax.set_yticklabels(df.education.str.title(), fontdict={'horizontalalignment': 'right'})
+ax.set_xlim(30, 50)
+plt.show()
+#%% [markdown]
+# 
+# Indeed we see our suspicion confirmed.  As you increase your
+# educational level, your hours per week will too increase.  Doctorates and
+# Prof-school being the highest.  The interesting thing to note here is the
+# "Prof-School" category.  Which is defined as a trade school.  Therefore, Those
+# with the highest working hours are those of higher or specialized education.
+# Now lets move onto the pairplot and start to get a feel for how our categorial
+# data is distrubuted.  
 #%%
 # Pairplot matrix.  
 #%%
-g = sns.PairGrid(df_census,vars=['age','fnlwgt',
+g = sns.pairplot(df_census,kind="scatter",vars=['age','fnlwgt',
                                'capital_gain','capital_loss', 
                                'hours_per_week'],
-                               hue='income_bracket',palette = 'muted')
+                               hue='income_bracket',
+                               plot_kws=dict(s=80, edgecolor="white", linewidth=2.5),
+                               palette = 'RdBu_r')
 g.map(plt.scatter, alpha=0.8)
 g.add_legend();
+#%% [markdown]
+#
+# Our pairplot shows us a few things.  It confirms some of our earlier
+# statements behind ranges and why certain attributes (captial_gain,
+# capital_loss) have what look to be outliers, but really is the upper class
+# making more money than the rest of us.  The other distributions look to be ok
+# with minmal outliers in them. We see the normal age skew in that the <50k
+# market is usually a younger age group.  So since we're now interested in age
+# groups.  Lets split upt he age groups in bins of 10 years, and see what kind
+# of income differences we see. 
+#
 
 #%%
 df_age = df_census.loc[:,['gender', 'age', 'income_bracket']]
@@ -335,47 +379,49 @@ sns.countplot(x='age_group',
     data=df_age,
     palette='RdBu_r',
     order=choices)
+#%% [markdown] 
+#
+# Well the first thing we're drawn too is that no 10-20 year olds are making
+# over 50k!  What a surprise.  Its interesting how the two income groups tend to
+# converge once age groups get to the 40-50 range, but then both steadily
+# decline afterwards.  This follows suit with the average retirement age in
+# america of 62 years old.  But the largest jump in those in the >50k group
+# looks to happen around age 30 to 40.  Suggesting that if you're not clearing
+# that mark by 40, then chances are its gonna get a bit harder to do so from
+# then on.  
+#
 
+#%%
+# Assigning age group to the dataframe. 
+df_census['age_group'] = np.select(conditions, choices, default='70-110')
+# Box Plot of age group by income bracket.
 
-#%% Another style of the pairplot above with a few more details
-g = sns.pairplot(df_census,kind="scatter",vars=['age','fnlwgt',
-                               'capital_gain','capital_loss', 
-                               'hours_per_week'],
-                               hue='income_bracket',
-                               plot_kws=dict(s=80, edgecolor="white", linewidth=2.5),
-                               palette = 'muted')
-g.add_legend();
+plt.figure(figsize=(10,8), dpi= 80)
+sns.boxplot(x='age_group', y='hours_per_week', 
+            data=df_census, hue='income_bracket',
+            order=choices,palette="tab10")
 
-
-#%% Crazy violin plot
-# Plot
+# Decoration
+plt.title('Age Group Hours per week by income_bracket', fontsize=22)
+plt.legend(title='Income_Bracket')
+plt.show()
+#%% [markdown]
+# Next, we implemented a voilin plot to determine what native countries people
+# immigrated from and how their income distribution fared in the US.  Remember
+# previously we assigned each native country to their native continent so really
+# this will be an examination of immigration by age, gender and continent.  
+#
+#%% Crazy violin plot Plot
 sns.catplot(x="age", y="native_country",
             hue="gender", col="income_bracket",
             data=df_census,
             orient="h", height=5, aspect=1, palette="tab10",
             kind="violin", dodge=True, cut=0, bw=.2)
 
-#%%
-# Assigning age group to the dataframe. 
-df_census['age_group'] = np.select(conditions, choices, default='70-110')
-
-#%%
-## Box Plot of region by income bracket.
-plt.figure(figsize=(10,8), dpi= 80)
-sns.boxplot(x='age_group', y='hours_per_week', 
-            data=df_census, hue='income_bracket',
-            order=choices,palette="tab10")
-# sns.stripplot(x='age_group', y='hours_per_week', data=df_census, color='black', size=3, jitter=1)
-
-# for i in range(len(df_census['age_group'].unique())-1):
-#     plt.vlines(i+.5, 10, 45, linestyles='solid', colors='gray', alpha=0.2)
-
-# Decoration
-plt.title('Age Group Hours per week by income_bracket', fontsize=22)
-plt.legend(title='Income_Bracket')
-plt.show()
-
-#%%
+#%% [markdown] 
+#
+# While there's alot going on in this chart,  a few things stand out to us.  One
+# is the amount of age 30 to 50 European women who work in the US.
 
 #%%
 df_cols = [
