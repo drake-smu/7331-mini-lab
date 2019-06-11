@@ -19,8 +19,6 @@ except:
 #%% [markdown] 
 # supposed to be a table on contents, but i dont know how to make
 # markdown do that yet. 
-# ## Section 1:Business Understanding
-#     ### Section 1a: Describe the purpose of the data set you selected
 
 #%% [markdown] 
 # ## Section 1: Business Understanding
@@ -204,7 +202,10 @@ print(df_census.groupby(['education','gender'])['gender'].count().unstack())
 # ### Section 2d: Interesting Visualizations
 #
 # #### Visualize the most interesting attributes (at least 5 attributes, your opinion on what is interesting). Important: Interpret the implications for each visualization. Explain for each attribute why the chosen visualization is appropriate.
-# 
+#
+# Now we can start analyzing different attributes to see if anything stands out
+# to us.  To start we'll begin with some histograms of the numerical attributes in order to look at skew
+
 
 
 #%% 
