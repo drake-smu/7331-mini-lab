@@ -652,9 +652,10 @@ stop1 = timeit.default_timer()
 t1 = stop1-start1
 # print(classification_report(y_test,predictions1))
 # print("Accuracy:",accuracy_score(y_test, predictions1))
-#print("Coefs: ", model1.coef_[0])
+# print("Coefs: ", model1.coef_[0])
 # print("Intercept: ", model1.intercept_)
-print_performance(y_test,predictions1,0)
+# print_performance(y_test,predictions1,0)
+
 print("\n runtime: ", t1)
 
 # %% [markdown]
@@ -701,13 +702,14 @@ t2 = stop2-start2
 # print(classification_report(y_test2,predictions2))
 # print("Accuracy:",accuracy_score(y_test2, predictions2))
 
-# TODO: Need to read docs to confirm i can use Pipeline like this.
-# print("Coefs: ", model2[1].coef_)
-# print("Intercept: ", model2[1].intercept_)
-print_performance(y_test2,predictions2,0)
-int("\n runtime: ", t2)
 
-model2.
+# print("Coefs: ", model2.steps[1][1].coef_)
+# print("Intercept: ", model2.steps[1][1].intercept_)
+# print("Features are: ", preprocess)
+# print_performance(y_test2,predictions2,0)
+print("\n runtime: ", t2)
+
+
 # %% [markdown]
 
 
@@ -882,12 +884,13 @@ rest5=print("\n runtime of fifth model: ", t5)
 #
 # #### Use the weights from logistic regression to interpret the importance of different features for the classification task. Explain your interpretation in detail. Why do you think some variables are more important?
 # 
-# Below are the weights for the coefficients of our scaled LR model.
+# Below are the weights and names for the coefficients of our scaled LR model.
 # %% 
+print("Feature names: ", ['workclass', 'marital_status', 'occupation', 'race', 'gender', 'relationship'])
 print("Coefs: ", model2.steps[1][1].coef_)
 print("Intercept: ", model2.steps[1][1].intercept_)
-scaler = model2.get_
 
+#
 # %% [markdown] 
 
 
