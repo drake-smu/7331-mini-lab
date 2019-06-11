@@ -474,6 +474,9 @@ drop_cols = [
 target_col = "target"
 
 #%%
+# TODO - Undo this and use the train test split function Che used
+# The ruberic specifically mentions to use an 80/20 split.
+
 df_training = pd.read_csv("data/adult-training.csv",
     names=df_cols, 
     skipinitialspace = True)
@@ -483,7 +486,8 @@ df_test = pd.read_csv("data/adult-test.csv",
     skipinitialspace = True,
     skiprows=1)
 
-
+# TODO - Also if time, make this data initialization and cleaning into a function.
+# It would be very helpful to show how some features improve accuracy
 
 #%%
 df_training[target_col] = (df_training["income_bracket"]
@@ -566,7 +570,11 @@ y_train2 = df_training2[target_col]
 X_test2 = df_test2.drop(columns=["income_bracket",target_col])
 y_test2 = df_test2[target_col]
 
+# %% [markdown]
+# ## Linear Regression
+
 #%%
+# Import sklearn libs 
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.impute import SimpleImputer
@@ -577,73 +585,137 @@ from sklearn.metrics import accuracy_score , classification_report, log_loss
 from sklearn.svm import LinearSVC, SVC
 
 #%%
-preprocess = make_column_transformer(
-    (cont_cols ,make_pipeline(SimpleImputer(), StandardScaler())),
-    (cat_cols, OneHotEncoder()))
+def print_performance(df_t,df_p, verbose=1):
+    """
+    Function to normalize outputs for models and reduce repeated code
+    
+    Parameters
+        ----------
+        df_t : DataFrame
+            DataFrame of test data to compare predictions with  
+        df_p (DataFrame): DataFrame of prediction data to evaluate
+        v : bool, optional
+            whether or not to include the columns in output (default
+            is TRUE)
+    """
+    logLoss = log_loss(df_t,df_p)
+    body = [classification_report(df_t,df_p),
+    "Accuracy:    %f" %accuracy_score(df_t, df_p),
+    "Log Loss:    %f" % logLoss]
+    if verbose:
+        body = np.concatenate([body,["Continuous Columns:\n%a" % cont_cols,
+            "Categorical Columns:\n%a" %cat_cols,"Drop Columns:\n%a" %drop_cols]])
+    print(
+    "="*80,
+    *body,
+    sep="\n\n",
+    end="\n\n"+("="*80))
+
+#%% [markdown]
+# ### Logistic Regression (dummy variables)
+# To start out we train a logistic regression model using 
+# simple dummy variables to encode the categorical features
+# in the data set for each of their k-1 levels.
 
 #%%
 model1 = LogisticRegression(solver='liblinear')
+model1.fit(X_train,y_train)
+predictions1 = model1.predict(X_test)
+# print(classification_report(y_test,predictions1))
+# print("Accuracy:",accuracy_score(y_test, predictions1))
+# print("Coefs: ", model1.coef_)
+# print("Intercept: ", model1.intercept_)
+print_performance(y_test,predictions1,0)
+#%% [markdown]
+# ### Logistic Regression (encoding and scaling)
+# The next step towards improving our logistic regression 
+# model is to rescale the continuous features in the dataset.
+# With Sklearn column transform and pipeline, we are able to apply 
+# the same trasforms and scaling to both the training and testing 
+# data that is fed to the model.
+#%%
+preprocess = make_column_transformer(
+    (make_pipeline(SimpleImputer(), StandardScaler()),cont_cols),
+    (OneHotEncoder(),cat_cols))
+
+# Define the model pipeline (preprocessing step and LogisticRegression step)
 model2 = make_pipeline(
     preprocess,
     LogisticRegression(solver='liblinear'))
 
-svm1 = LinearSVC(C=0.07742637)
-svm1.fit(X_train, y_train)
-model1.fit(X_train,y_train)
+# Fit the data
 model2.fit(X_train2,y_train2)
 
-predictions1 = model1.predict(X_test)
+# Calculate predictions
 predictions2 = model2.predict(X_test2)
 
-svm_predictions = svm1.predict(X_test)
-#%%
-print(classification_report(y_test,predictions1))
-print("Accuracy:",accuracy_score(y_test, predictions1))
+# print(classification_report(y_test2,predictions2))
+# print("Accuracy:",accuracy_score(y_test2, predictions2))
 
-print(classification_report(y_test2,predictions2))
-print("Accuracy:",accuracy_score(y_test2, predictions2))
+# TODO: Need to read docs to confirm i can use Pipeline like this.
+# print("Coefs: ", model2[1].coef_)
+# print("Intercept: ", model2[1].intercept_)
+print_performance(y_test2,predictions2,0)
+# %% [markdown]
+## Support Vector Machine (SVM)
+# An alternative classification method to logistic regression modeling 
+# is SVM modeling. 
+#  
+# ## Simple SVM Model  
+# Before we jump into model optimization, we establish baseline 
+# metrics for using a linear kernel and a regularization coefficient (C)
+# of 1 (the default value)
 
-print(classification_report(y_test,svm_predictions))
-print("Accuracy:",accuracy_score(y_test, svm_predictions))
+#%% 
+svm1 = LinearSVC(C=1.0, max_iter=10000)
+svm1.fit(X_train, y_train)
+svm1_predictions = svm1.predict(X_test)
 
+print_performance(y_test,svm1_predictions,0)
+#%% [markdown]
+# ## SVM (with feature scaling)
+# Similar to other classification methods, SVM's can be impacted 
+# by varying units and magnitudes of standard deviation across 
+# features. To increase model accuracy the features are transformed 
+# similarly to how they were in the above Logistic Regression model.
+#%% 
+svm2 = make_pipeline(
+        preprocess,
+        LinearSVC(C=1.0, max_iter=10000))
 
-#%%
+svm2.fit(X_train2, y_train2)
+svm2_predictions = svm2.predict(X_test2)
+print_performance(y_test2,svm2_predictions,0)
 
-logLoss = log_loss(y_test,predictions1)
-print(
-    "="*80,
-    classification_report(y_test,predictions1),
-    "Accuracy:    %f" %accuracy_score(y_test, predictions1),
-    "Log Loss:    %f" % logLoss,
-    "Continuous Columns:\n%a" % cont_cols,
-    "Categorical Columns:\n%a" %cat_cols,
-    "Drop Columns:\n%a" %drop_cols,
-    sep="\n\n",
-    end="\n\n"+("="*80))
+#%% [markdown]
+# ## SVM (optimizing C parameter)
+# Outside of data standardization, accuracy can also be increased 
+# through model tuning. In this case, the C parameter, or Penalty 
+# parameter C of the error term, can be tuned to help with over and 
+# under fitting of the model. To tune the model a plot of prediction 
+# scores vs C values will illustrate the optimal C value for the 
+# given model.
 #%%
 C_s = np.logspace(-10, 0, 10)
-svm2 = LinearSVC(max_iter=5000)
 
 scores = list()
-scores_std = list()
 for C in C_s:
     this_model = make_pipeline(
         preprocess,
-        LinearSVC(max_iter=5000, C=C))
+        LinearSVC(max_iter=10000, C=C))
     this_fit = this_model.fit(X_train2, y_train2)
     # this_pred = 
     this_scores = this_fit.score(X_test2,y_test2)
     scores.append(this_scores)
-    scores_std.append(np.std(this_scores))
 
-# Do the plotting
-#%%
 max_index = np.argmax(scores)
 max_C = C_s[max_index].round(8)
 max_score = np.max(scores)
+
+#%%
+
 plt.figure()
 plt.semilogx(C_s, scores)
-# plt.vlines(max_C, ymax=np.max(scores), ymin=)
 locs, labels = plt.yticks()
 plt.yticks(locs, list(map(lambda x: "%g" % x, locs)))
 plt.ylabel('Mean Prediction Accuracy')
@@ -653,9 +725,36 @@ plt.annotate('Optimal C Value: %s'%max_C, xy=(max_C, max_score),  xycoords='data
             arrowprops=dict(arrowstyle="fancy",
                             fc="0.6", ec="none",
                             connectionstyle="angle3,angleA=0,angleB=-90"))
-# plt.ylim(0.7, 0.9)
 plt.show()
 
-#%%
+#%% 
+svm_max = make_pipeline(
+        preprocess,
+        LinearSVC(
+            C=max_C, 
+            max_iter=10000
+            )
+        )
+
+svm_max.fit(X_train2, y_train2)
+svm_max_predictions = svm_max.predict(X_test2)
+
+print_performance(y_test2,svm_max_predictions,0)
+
+
+# TODO - From the looks of the visuals on the assignment, I think we may need 
+# a probability plane. So far the best solution for this appears to be by performing
+# PCA to reduce X to only 2-d features and then the probability is the 3rd dimention 
+# Possibly might work to just use the two features with largest `.coef_` values?
+
+#%% [markdown]
+# TODO- PUT ME IN RIGHT SPOT
+## LinearSVC vs SVC(kernel='linear')  
+# LinearSVC and SVC(kernel='linear') are two similar functions from the sklearn suite.
+# They are both useful for generating Support Vector Classifiers, however the `solver` 
+# mechanism of LinearSVC ('liblinear') is much more scalable compared to that of SVC(kernel='linear') 
+# ('libsvm') [source](https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html#sklearn.svm.LinearSVC).
+# This difference makes LinearSVC the prefered choice for any dataset in the 10's of thousands. 
+# The libsvm solver scales quadradically in compute time with increase in dataset size.
 
 #%%
