@@ -350,7 +350,16 @@ g.map(plt.scatter, alpha=0.8)
 g.add_legend();
 #%% [markdown]
 #
-# Our pairplot shows us a few things.  It confirms some of our earlier statements behind ranges and why certain attributes have
+# Our pairplot shows us a few things.  It confirms some of our earlier
+# statements behind ranges and why certain attributes (captial_gain,
+# capital_loss) have what look to be outliers, but really is the upper class
+# making more money than the rest of us.  The other distributions look to be ok
+# with minmal outliers in them. We see the normal age skew in that the <50k
+# market is usually a younger age group.  So since we're now interested in age
+# groups.  Lets split upt he age groups in bins of 10 years, and see what kind
+# of income differences we see. 
+#
+
 #%%
 df_age = df_census.loc[:,['gender', 'age', 'income_bracket']]
 conditions = [
@@ -370,9 +379,21 @@ sns.countplot(x='age_group',
     data=df_age,
     palette='RdBu_r',
     order=choices)
-
-#%% Crazy violin plot
-# Plot
+#%% [markdown] 
+#
+# Well the first thing we're drawn too is that no 10-20 year olds are making
+# over 50k!  What a surprise.  Its interesting how the two income groups tend to
+# converge once age groups get to the 40-50 range, but then both steadily
+# decline afterwards.  This follows suit with the average retirement age in
+# america of 62 years old.  But the largest jump in those in the >50k group
+# looks to happen around age 30 to 40.  Suggesting that if you're not clearing
+# that mark by 40, then chances are its gonna get a bit harder to do so from
+# then on.  
+#
+# Next, we implemented a voilin plot to determine what native countries people
+# immigrated from and how their income distribution fared in the US.  
+# 
+#%% Crazy violin plot Plot
 sns.catplot(x="age", y="native_country",
             hue="gender", col="income_bracket",
             data=df_census,
