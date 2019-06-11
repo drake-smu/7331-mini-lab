@@ -278,8 +278,15 @@ sns.countplot(x='income_bracket',
 # divorced, seperated, or widowed people are located in the lower income
 # bracket.  Suggesting that, if you want to make over 50k, you might
 # want to get yourself a partner, and keep them!
-#
 
+#%% [markdown]
+# ### Section 2e: Explore Joint Attributes
+#
+# #### Visualize relationships between attributes: Look at the attributes via scatter plots, correlation, cross-tabulation, group-wise averages, etc. as appropriate. Explain any interesting relationships.
+#
+# Now follows a bevy of various plots to explore the relationships between the
+# data that we might see.  First on that list in the correlation plot to see if
+# there might be any between the numerical attributes. 
 #%%
 #Generate Correlation HeatMap
 colormap = sns.diverging_palette(220, 10, as_cmap=True)
@@ -289,6 +296,15 @@ corr = df_census.corr()
 sns.heatmap(corr, cmap="coolwarm", annot=True, fmt=".2f",
             xticklabels=corr.columns.values,
             yticklabels=corr.columns.values)
+
+#%% [markdown] 
+# The correlation heatmap above shows that we have very little
+# correlation within our dataset.  No two attributes scored above 0.2
+# correlation.  The only ones that look to be slightly related are that of
+# education_num and hours_per_week (0.15).  Which leads to some interesting
+# possiblities if the amount of education you recieved determined the hours you
+# worked.  We speculate that the more education recieved, the longer the hours
+# you might work. 
 
 #%%
 # Pairplot matrix.  
