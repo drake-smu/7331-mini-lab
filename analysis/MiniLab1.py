@@ -648,7 +648,7 @@ locs, labels = plt.yticks()
 plt.yticks(locs, list(map(lambda x: "%g" % x, locs)))
 plt.ylabel('Mean Prediction Accuracy')
 plt.xlabel('Parameter C')
-plt.annotate('Optimal C Value', xy=(max_C, max_score),  xycoords='data',
+plt.annotate('Optimal C Value: %s'%max_C, xy=(max_C, max_score),  xycoords='data',
             xytext=(-80, -40), textcoords='offset points',
             arrowprops=dict(arrowstyle="fancy",
                             fc="0.6", ec="none",
