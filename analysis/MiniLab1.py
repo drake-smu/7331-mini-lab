@@ -436,8 +436,8 @@ sns.catplot(x="age", y="native_country",
 # the workforce.  The <50k income bracket is mostly comprised of younger
 # individuals, with a suprising amount of younger Asian women.  On the subject
 # of women, it would seem that older women make up alot of the >50k when Europe
-# is their native country.  This suggests alot of higher paid women tend to come
-# to the U.S. for better fare opportunity.
+# is their native country.  This suggests middle aged, higher paid European women
+# tend to come to the U.S. for a chance to make better money.
 
 
 # %%
@@ -702,15 +702,11 @@ t2 = stop2-start2
 # print(classification_report(y_test2,predictions2))
 # print("Accuracy:",accuracy_score(y_test2, predictions2))
 
-# print("Coefs: ", model2.steps[1][1].coef_)
-# print("Intercept: ", model2.steps[1][1].intercept_)
-# print("Features are: ", model2.steps[1][1].classes_)
+print("Feature names: ", model2.steps[1][1])
+print("Coefs: ", model2.steps[1][1].coef_)
+print("Intercept: ", model2.steps[1][1].intercept_)
 # print_performance(y_test2,predictions2,0)
 print("\n runtime: ", t2)
-
-
-# %% [markdown]
-
 
 # %% [markdown]
 # # Support Vector Machine (SVM)
@@ -883,20 +879,19 @@ rest5=print("\n runtime of fifth model: ", t5)
 # Below are the weights and names for the coefficients of our scaled LR model.
 # We will analyze the coefficients for it. 
 # %% 
-print("Feature names: ", ['workclass', 'marital_status', 'occupation', 'race', 'gender', 'relationship'])
+
 print("Coefs: ", model2.steps[1][1].coef_)
 print("Intercept: ", model2.steps[1][1].intercept_)
-
+#  ['workclass', 'marital_status', 'occupation', 'race', 'gender', 'relationship'])
 
 # %% [markdown] 
 #
-# The features above are the first 6 of the coefficients within array returned
-# from the model that are the easiest to explain as there isn't any interaction
-# in them. 
+# The features above are the first 6 of the coefficients within the array returned
+# from the model that are the easiest to explain as they lack interaction. 
 #
 # | workclass  | marital_status | occupation | race       | gender      | relationship |
 # |------------|----------------|------------|------------|-------------|--------------|
-# | 0.35556391 | 0.72176436     | 2.30551077 | 0.25910035 | 0.36871751  | -0.20975679] |
+# | 0.35556391 | 0.72176436     | 2.30551077 | 0.25910035 | 0.36871751  | -0.20975679  |
 #
 #
 # From the above weights, we can see which of the main attributes holds what
@@ -905,7 +900,7 @@ print("Intercept: ", model2.steps[1][1].intercept_)
 # This aligns with our earlier discovery in the EDA section above that the
 # occupation, and marital status play a vital role in how much money an American
 # made in 1994.  Gender race, and work class were all similarly weighted meaning
-# they do positively influence the classifier function but not to a great
+# they do positively influence the LR classifier but not to a great
 # degree. Lastly relationship had a negative weight on the regression.  This
 # suggests that being married is beneficial for breaking the 50k mark, it still
 # depends on what role you play in the family to decide if you're going to be
