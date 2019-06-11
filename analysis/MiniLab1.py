@@ -211,7 +211,7 @@ for i in secondary:
 #
 # We also wanted to get a look at some of the educational categories by gender
 # and income bracket to look for interesting statistics there.  We noticed that
-# males tend to have more education across all grade levels.  We also found that
+# males tend to have more education across all education levels.  We also found that
 # when looking at income bracket and education, a bachelors degree doesn't put
 # you in a better place to make over 50k a year.  In fact, the only categories
 # that did have a higher count in the >50k income bracket were Doctorate,
@@ -224,7 +224,9 @@ for i in secondary:
 #
 # Now we can start analyzing different attributes to see if anything stands out
 # to us.  To start we'll begin with some histograms of the numerical attributes
-# in order to look at the ranges and if we have any skew.  
+# in order to look at the ranges aagain and check for skew.  We'll also look at
+# some box plots of gender and marital status to continue our exploration into
+# those categories. 
 
 
 #%% 
@@ -234,6 +236,15 @@ df_num = df_census.select_dtypes(include=['float64'])
 df_census.hist(figsize =(14,12))
 
 
+#%% [markdown] 
+# The histograms show us all things we expect to see from the
+# numerical categories.  Most of the workforce is from 20 to 50.  Educational
+# limitations look to have the largest difference between 8th - 9th grade.
+# Implying that high school drop out rates are a factor in the dataset.   Hours
+# per week also exhibited a large distrubution around 40 hours a week, which
+# fits common conception of American work hours.  fnl weight also showed some
+# strange dedencies in the upper ranges of the dataset, but seeing as its not
+# going to be an area of focus for this analysis, we'll omit any changes here.  
 #%%
 ## boxplots of income by gender dist.
 sns.set_style('whitegrid')
@@ -241,6 +252,13 @@ sns.countplot(x='income_bracket',
     hue='gender',
     data=df_census,
     palette='RdBu_r')
+
+#%% [markdown]    
+# This bar chart shows us the differences in male and female income based on
+# gender.  We see counts are much higher in both income brackets for males.
+# Suggesting that in 1994, the american workforce sampled had more men than
+# women in the workforce.  
+
 #%%
 ## by marital status
 sns.set_style('whitegrid')
@@ -248,6 +266,8 @@ sns.countplot(x='income_bracket',
     hue='marital_status',
     data=df_census,
     palette='RdBu_r')
+
+#%% [markdown]
 
 
 #%%
