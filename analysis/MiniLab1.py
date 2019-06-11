@@ -257,8 +257,10 @@ sns.countplot(x='income_bracket',
 # This bar chart shows us the differences in male and female income based on
 # gender.  We see counts are much higher in both income brackets for males.
 # Suggesting that in 1994, the american workforce sampled had more men than
-# women in the workforce.  
-
+# women in the workforce.  In the >50k income bracket, males showed an even
+# higher difference between their female counterparts, suggesting that males
+# dominate that income bracket moreso than those in the <=50 income bracket.
+#
 #%%
 ## by marital status
 sns.set_style('whitegrid')
@@ -267,8 +269,16 @@ sns.countplot(x='income_bracket',
     data=df_census,
     palette='RdBu_r')
 
-#%% [markdown]
-
+#%% [markdown] This bar chart represents income bracket by marital status.
+# Interesting to see a few things, first off the <=50k income bracket highest
+# counts come from the "Never-married" status.  This suggests that marriage does
+# in fact come with alot of financial benefit, as you can see is relevant on the
+# other half of the chart.  As married couples far outmatch any other category
+# counts in the >50k income bracket.  We can confirm this again as most of the
+# divorced, seperated, or widowed people are located in the lower income
+# bracket.  Suggesting that, if you want to make over 50k, you might
+# want to get yourself a partner, and keep them!
+#
 
 #%%
 #Generate Correlation HeatMap
