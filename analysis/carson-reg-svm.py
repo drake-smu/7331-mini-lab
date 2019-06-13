@@ -8,10 +8,13 @@ except:
 	pass
 
 # %%
+
+
 # Add library references
 import pandas as pd
 import numpy as np
 import seaborn as sns
+import timeit
 #import plotly.plotly as py
 #import plotly.graph_objs as go
 import matplotlib.pyplot as plt
@@ -75,7 +78,7 @@ def fetch_df():
         skipinitialspace = True,
         skiprows=1)
 
-    df = pd.concat([df_training,df_training],axis=0)
+    df = pd.concat([df_training,df_test],axis=0)
     # df.info()
     return df
 
@@ -147,6 +150,10 @@ def build_transform(cont_cols,cat_cols):
 #%%
 X,y = build_df(drop_cols)
 X_all,y = build_df(drops=[])
+trans = build_transform(cont_cols,cat_cols)
+
+
+
 
 #%%
 # X_clean = X.dropna(axis=1, how='all')
@@ -182,5 +189,52 @@ print("Score with all features: {:.3f}".format(
 lr.fit(X_processed_train, y_train)
 print("Score with only selected features: {:.3f}".format(
     lr.score(X_processed_test, y_test)))
+
+#%%
+svc1 = SVC(cache_size=5000,kernel='linear')
+t_start = timeit.default_timer()
+svc1.fit(X_processed_train,y_train)
+print('linear Completed: %f'%(timeit.default_timer()-t_start))
+print("Score with only selected features [svc-linear]: {:.3f}".format(
+    svc1.score(X_processed_test, y_test)))
+
+# svc1.kernel='linear'
+# t_start = timeit.default_timer()
+# svc1.fit(X_processed_train,y_train)
+# print('linear Completed: %f'%(timeit.default_timer()-t_start))
+# print("Score with only selected features [svc-linear]: {:.3f}".format(
+#     svc1.score(X_processed_test, y_test)))
+
+#%%
+C_s = np.logspace(-10, 0, 10)
+
+scores = list()
+for C in C_s:
+    t_start = timeit.default_timer()
+    svc1.C = C
+    this_fit = svc1.fit(X_processed_train,y_train)
+    # this_pred = 
+    this_scores = this_fit.score(X_processed_test, y_test)
+    scores.append(this_scores)
+    print('Rount Completed: %f'%(timeit.default_timer()-t_start))
+
+max_index = np.argmax(scores)
+max_C = C_s[max_index].round(8)
+max_score = np.max(scores)
+
+# %%
+
+plt.figure()
+plt.semilogx(C_s, scores)
+locs, labels = plt.yticks()
+plt.yticks(locs, list(map(lambda x: "%g" % x, locs)))
+plt.ylabel('Mean Prediction Accuracy')
+plt.xlabel('Parameter C')
+plt.annotate('Optimal C Value: %s'%max_C, xy=(max_C, max_score),  xycoords='data',
+            xytext=(-80, -40), textcoords='offset points',
+            arrowprops=dict(arrowstyle="fancy",
+                            fc="0.6", ec="none",
+                            connectionstyle="angle3,angleA=0,angleB=-90"))
+plt.show()
 
 #%%
